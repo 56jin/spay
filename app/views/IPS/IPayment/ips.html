@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Servlet AccountServlet</title>
+  </head>
+  <body>
+    <form action="${args.url}" id="frm1" method="post">
+      #{if args.prefix == "0"}
+      <input type="hidden" name="argMerCode" value="${args.argMerCode}">
+      <input type="hidden" name="arg3DesXmlPara" value="${args.arg3DesXmlPara}">
+      <input type="hidden" name="argSign" value="${args.argSign}">
+      #{/if}
+      #{else}
+      <input type="hidden" name="pMerCode" value="${args.argMerCode}">
+      <input type="hidden" name="p3DesXmlPara" value="${args.arg3DesXmlPara}">
+      <input type="hidden" name="pSign" value="${args.argSign}">
+      #{/else}
+    </form>
+
+    <script language="javascript">
+      document.getElementById("frm1").submit();
+    </script>
+  </body>
+</html>

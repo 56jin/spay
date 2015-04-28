@@ -1,0 +1,5 @@
+<div class="xfht_logobj">
+  <div class="xfht_logo">
+    <img src="@{'/public/images/login_logo.png'}" alt="logo">
+  </div>
+</div>

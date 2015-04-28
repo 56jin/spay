@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Servlet AccountServlet</title>
+</head>
+<body>
+	<form action="${map.url}" id="frm1" method="post">
+		<input type="hidden" name="argMerCode" value="${map.argMerCode}">
+		<input type="hidden" name="arg3DesXmlPara" value="${map.arg3DesXmlPara}"> 
+		<input type="hidden" name="argSign" value="${map.argSign}">
+	</form>
+	
+	<script language="javascript">
+		document.getElementById("frm1").submit();
+	</script>
+</body>
+</html>

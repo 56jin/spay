@@ -1,0 +1,114 @@
+<div class="xn_c_content">
+  <div class="xf_content_add">
+  	#{if platform == null}
+	#{form @supervisor.systemSettings.FinanceSettingAction.saveJoinSetting(), id:'joinSetting'}
+	<div class="xfht_t_j_y_2">
+	  <!--右上-->
+	  <div class="xf_ht_obu_fklm">  资金托管接入平台设置</div>
+	  <div class="xf_ht_jbzl_sz">
+	  <div class="xf_htgl_jgone">
+		<div class="xf_ht_gly_xtgu_t_tahez">
+		<table class="xf_ht_gly_xtgu_t_table xf_ht_gly_xtgu_t_table2" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		  <td colspan="3">
+			<span class="xfht_t_j_td_span">支付账户：</span>
+			#{select 'gateway', items:ways, valueProperty:'id', labelProperty:'name', value:flash?.gateway, class:'xfht_t_j_td_1', id:'gateways' /}
+		  </td>
+		  </tr>
+		  <tr>
+		  <td colspan="3">
+			<span class="xfht_t_j_td_span">平台名称：</span> 
+			<input class="xfht_zr_input xfht_zr_input_shoping" type="text" name="name" id="name" value="${flash?.name}">
+		  </td>
+		  </tr>
+		  <tr>
+		  <td colspan="3"><span class="xfht_t_j_td_span">绑定域名：</span>
+			<input class="xfht_zr_input xfht_zr_input_shoping" type="text" name="encryption" id="encryption" value="${flash?.encryption}">
+		  </td>
+		  </tr>
+		  <tr>
+		  <td colspan="3"><span class="xfht_t_j_td_span">约定密钥：</span>
+			<input class="xfht_zr_input xfht_zr_input_shoping" type="text" name="domain" id="domain" value="${flash?.domain}">
+		  </td>
+		  </tr>
+		  <tr>
+		</table>
+		</div>
+	  </div> 
+	  </div>
+	  <div class="xf_htgl_jgsix_hyg">
+	  <input class="xf_ht_tcc_button_ok" type="button" value="保  存" onclick="save()">
+	  </div>
+	</div>
+	#{/form}
+	#{/if}
+	#{else}
+	#{form @supervisor.systemSettings.FinanceSettingAction.updatePlatform(), id:'joinSetting'}
+	<div class="xfht_t_j_y_2">
+	  <!--右上-->
+	  <div class="xf_ht_obu_fklm">  资金托管接入平台设置</div>
+	  <div class="xf_ht_jbzl_sz">
+	  <div class="xf_htgl_jgone">
+		<div class="xf_ht_gly_xtgu_t_tahez">
+		<table class="xf_ht_gly_xtgu_t_table xf_ht_gly_xtgu_t_table2" border="0" cellspacing="0" cellpadding="0">
+		  <tr>
+		  <td colspan="3">
+			<span class="xfht_t_j_td_span">支付账户：</span>
+			#{select 'gateway', items:ways, valueProperty:'id', labelProperty:'name', value:platform?.gatewayId, class:'xfht_t_j_td_1', id:'gateways' /}
+		  </td>
+		  </tr>
+		  <tr>
+		  <td colspan="3">
+			<span class="xfht_t_j_td_span">平台名称：</span> 
+			<input class="xfht_zr_input xfht_zr_input_shoping" type="text" name="name" id="name" value="${platform?.name}">
+			<input class="xfht_zr_input xfht_zr_input_shoping" type="hidden" name="platformId"  value="${platform?.id}">
+		  </td>
+		  </tr>
+		  <tr>
+		  <td colspan="3"><span class="xfht_t_j_td_span">绑定域名：</span>
+			<input class="xfht_zr_input xfht_zr_input_shoping" type="text" name="encryption" id="encryption" value="${platform?.encryption}">
+		  </td>
+		  </tr>
+		  <tr>
+		  <td colspan="3"><span class="xfht_t_j_td_span">约定密钥：</span>
+			<input class="xfht_zr_input xfht_zr_input_shoping" type="text" name="domain" id="domain" value="${platform?.domain}">
+		  </td>
+		  </tr>
+		  <tr>
+		</table>
+		</div>
+	  </div> 
+	  </div>
+	  <div class="xf_htgl_jgsix_hyg">
+	  <input class="xf_ht_tcc_button_ok" type="button" value="保  存" onclick="save()">
+	  </div>
+	</div>
+	#{/form}
+	#{/else}
+  </div>
+</div>
+    
+<script type="text/javascript">
+  $(function(){
+   showHighLight(2,2,20);
+  })
+  
+  function save() {
+    if($("#name").val().trim() == '') {
+    	alert("请输入公司名称");
+    	return;
+    }
+    
+    if($("#encryption").val().trim() == '') {
+    	alert("请输入绑定域名");
+    	return;
+    }
+    
+    if($("#domain").val().trim() == '') {
+    	alert("请输入约定密钥");
+    	return;
+    }
+    
+    $("#joinSetting").submit();
+  }
+</script>

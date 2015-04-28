@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+ <meta http-equiv="content-Type" content="text/html; charset=gbk">
+<title>Servlet AccountServlet</title>
+</head>
+<body>
+<form action="${url}" id="frm1" method="post">
+ <input type="hidden" name="version" value="${version}">
+      <input type="hidden" name="language" value="${language}">
+      <input type="hidden" name="signType" value="${signType}">
+      <input type="hidden" name="tranCode" value="${tranCode}">
+      <input type="hidden" name="merchantID" value="${merchantID}">
+      <input type="hidden" name="merOrderNum" value="${merOrderNum}">
+      <input type="hidden" name="Merchanturl" value="${Merchanturl}">
+      <input type="hidden" name="tranAmt" value="${tranAmt}">
+      <input type="hidden" name="feeAmt" value="${feeAmt}">
+      <input type="hidden" name="currencyType" value="${currencyType}">
+      <input type="hidden" name="frontMerUrl" value="${frontMerUrl}">
+      <input type="hidden" name="backgroundMerUrl" value="${backgroundMerUrl}">
+      <input type="hidden" name="tranDateTime" value="${tranDateTime}">
+      <input type="hidden" name="virCardNoIn" value="${virCardNoIn}">
+      <input type="hidden" name="tranIP" value="${tranIP}">
+      <input type="hidden" name="isRepeatSubmit" value="${isRepeatSubmit}">
+      <input type="hidden" name="goodsName" value="${goodsName}" >
+      
+      <input type="hidden" name="goodsDetail" value="${goodsDetail}">
+      <input type="hidden" name="buyerName" value="${buyerName}">
+      <input type="hidden" name="buyerContact" value="${buyerContact}">
+      <input type="hidden" name="merRemark1" value="${merRemark1}">
+      <input type="hidden" name="merRemark2" value="${merRemark2}">
+      <input type="hidden" name="bankCode" value="${bankCode}">
+      <input type="hidden" name="userType" value="${userType}">
+      <input type="hidden" name="VerficationCode" value="${VerficationCode}" >
+      
+      <input type="hidden" name="gopayServerTime" value="${gopayServerTime}">
+      <input type="hidden" name="signValue" value="${signValue}">
+</form>
+<script language="javascript">
+document.getElementById("frm1").submit();
+</script>
+</body>
+</html>

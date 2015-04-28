@@ -1,0 +1,319 @@
+*       /																		supervisor.login.LoginAction.loginInit
+GET     /errorFront                   											Application.errorFront
+GET     /errorSupervisor              											Application.errorSupervisor
+POST    /Application/randomID                           						Application.randomID
+GET     /Application/captcha                            						Application.captcha
+GET     /Application/exportExcel                        						Application.exportExcel
+POST    /Application/getCity                            						Application.getCity
+GET     /images                            			 							Application.images
+GET     /dlimg                            			 	 						Application.dlImages
+GET     /downloadFiles                            		 						Application.downloadFiles
+POST    /vipAgreement                           		 						Application.vipAgreement
+GET 	/dlWidget										 						Application.dlWidget
+GET 	/log										 							Application.logs
+GET 	/dlpacks/{version}										 				Application.dlpacks
+GET     /favicon.ico                            								404
+
+GET     /error                            										Application.error
+#资金托管路由
+#POST   /payment/spay                      										Payment.spay
+*    	/payment/spay                      										Payment.spay
+GET    	/ips/ips                      											IPS.IPayment.ips
+POST    /ips/ipsCommit                      									IPS.IPayment.ipsCommit
+POST    /ips/ipsCommitAsynch                      								IPS.IPayment.ipsCommitAsynch
+GET     /payment2                                      							Payment2.payment
+GET     /guo                                      								Payment2.guo
+POST    /callback                                      							Payment2.callback
+POST    /back                                      								PaymentTest.back
+
+#易宝资金托管路由
+GET     /yee/transfer                                     						YEE.YEEPayment.transfer
+*       /yee/callBack                                     						YEE.YEEPayment.callBack
+*       /yee/notifys                                     						YEE.YEEPayment.notifys
+*       /yee/logFileList~[path]                                     			YEE.YEEPayment.logFileList
+
+#-------------------------------------双乾--------------------------------------------------------------------
+#中间件向双乾提供的回调接口地址 
+#GET    /loan                      						                        loan.LoanController.loan
+#开户
+POST    /loan/loanCreateAccountReturn                      						loan.LoanController.loanCreateAccountReturn
+#标的登记（新增）
+POST    /loan/loanAddRegisterSubjectReturn                      				loan.LoanController.loanAddRegisterSubjectReturn
+#标的登记（结束）
+POST    /loan/loanEndRegisterSubjectReturn                      			    loan.LoanController.loanEndRegisterSubjectReturn
+#登记债权人
+POST    /loan/loanRegisterCreditorReturn                      					loan.LoanController.loanRegisterCreditorReturn
+GET     /loan/investFailed                      					            loan.LoanController.investFailed
+#登记债权转让
+POST    /loan/loanCreditTransferReturn                      					loan.LoanController.loanCreditTransferReturn
+#自动投标/还款签约
+POST    /loan/loanSignReturn                      						        loan.LoanController.loanSignReturn
+#充值
+POST    /loan/loanRechargeReturn                      						    loan.LoanController.loanRechargeReturn
+#转账（投资）
+POST    /loan/loanTransferReturn                      						    loan.LoanController.loanTransferReturn
+#转账（代偿）
+POST    /loan/loanCompensateReturn                      						loan.LoanController.loanCompensateReturn
+#转账（代偿还款）
+POST    /loan/loanCompensateRepaymentReturn                      			    loan.LoanController.loanCompensateRepaymentReturn
+#二次分配审核
+POST    /loan/loanAuthorizeSecondaryReturn                      			    loan.LoanController.loanAuthorizeSecondaryReturn
+#提现
+POST    /loan/loanWithdrawReturn                      			                loan.LoanController.loanWithdrawReturn
+#还款
+POST    /loan/loanRepaymentReturn                      			                loan.LoanController.loanRepaymentReturn
+#提现银行卡号绑定
+POST    /loan/loanBondCardNoReturn                      			            loan.LoanController.loanBondCardNoReturn
+#解冻保证金
+POST    /loan/loanGuaranteeUnfreezeReturn                      			        loan.LoanController.loanGuaranteeUnfreezeReturn
+#用户转商户
+POST    /loan/loanTransferUserToMerReturn                      			        loan.LoanController.loanTransferUserToMerReturn
+#商户转用户
+POST    /loan/loanTransferMerToUserReturn                      			        loan.LoanController.loanTransferMerToUserReturn
+#解冻投资金额
+POST    /loan/loanUnfreezeInvestAmountReturn                      			    loan.LoanController.loanUnfreezeInvestAmountReturn
+
+#补单
+GET     /loan/testLoanTransferAudit                                             loan.LoanController.testLoanTransferAudit
+POST    /loan/loanTransferAuditReturn                       					loan.LoanController.loanTransferAuditReturn
+
+#中间件向双乾提供的后台通知接口地址
+#开户
+POST    /loan/loanCreateAccountNotify                      						loan.LoanController.loanCreateAccountNotify
+#标的登记（新增）
+POST    /loan/loanAddRegisterSubjectNotify                      				loan.LoanController.loanAddRegisterSubjectNotify
+#标的登记（结束）
+POST    /loan/loanEndRegisterSubjectNotify                      			    loan.LoanController.loanEndRegisterSubjectNotify
+#登记债权人
+POST    /loan/loanRegisterCreditorNotify                      					loan.LoanController.loanRegisterCreditorNotify
+#登记债权转让
+POST    /loan/loanCreditTransferNotify                      					loan.LoanController.loanCreditTransferNotify
+#自动投标/还款签约
+POST    /loan/loanSignNotify                      						        loan.LoanController.loanSignNotify
+#充值
+POST    /loan/loanRechargeNotify                      						    loan.LoanController.loanRechargeNotify
+#转账（投资）
+POST    /loan/loanTransferNotify                      						    loan.LoanController.loanTransferNotify
+#二次分配审核
+POST    /loan/loanAuthorizeSecondaryNotify                      			    loan.LoanController.loanAuthorizeSecondaryNotify
+#提现
+POST    /loan/loanWithdrawNotify                      			                loan.LoanController.loanWithdrawNotify
+#还款
+POST    /loan/loanRepaymentNotify                      			                loan.LoanController.loanRepaymentNotify
+#提现银行卡号绑定
+POST    /loan/loanBondCardNoNotify                      			            loan.LoanController.loanBondCardNoNotify
+#解冻保证金
+POST    /loan/loanGuaranteeUnfreezeNotify                      			        loan.LoanController.loanGuaranteeUnfreezeNotify
+
+#国付宝资金托管路由
+GET    /guo/guo                         										GUO.GPayment.guo
+POST   /guo/guoCommit                         									GUO.GPayment.guoCommit
+POST   /guo/guoCommitLogin                         								GUO.GPayment.guoCommitLogin
+POST   /guo/guoCommitAsynch                        								GUO.GPayment.guoCommitAsynch
+
+#上传图片
+*     	/FileUpload/uploadImage 												FileUpload.uploadImage
+*     	/FileUpload/uploadImage2 												FileUpload.uploadImage2
+*     	/FileUpload/uploadImageReturnType 										FileUpload.uploadImageReturnType
+# 上传文件
+*     	/FileUpload/uploadFile 													FileUpload.uploadFile
+# 下载图片
+*    	/FileUpload/downloadImage    											FileUpload.downloadImage
+# Map static resources from the /app/public folder to the /public path
+
+GET     /public/                                staticDir:public
+
+
+#^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^后台路由配置^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+# ***********************************************登录*****************************************************
+# 登录
+GET    /supervisor/?                                  							supervisor.login.LoginAction.loginInit
+POST   /supervisor                                  							supervisor.login.LoginAction.login
+GET	   /supervisor/ukeyCheck                                  					supervisor.login.LoginAction.ukeyCheck
+GET    /supervisor/logout                           							supervisor.login.LoginAction.logout
+GET    /supervisor/login/loginAlert                        						supervisor.login.LoginAction.loginAlert
+
+GET    /supervisor/login/ipLocation                        						supervisor.login.LoginAction.ipLocation
+
+GET   /supervisor/checkUkeyInIt                          						supervisor.login.LoginAction.checkUkeyInIt
+GET   /supervisor/UkeyCheck                        						        supervisor.login.LoginAction.checkUkeySign
+GET   /supervisor/toBlank                        						        supervisor.login.LoginAction.toBlank
+
+# ***********************************************用户中心*****************************************************
+GET     /supervisor/account/home                            		supervisor.account.AccountAction.home
+POST    /supervisor/editSupervisor                          		supervisor.account.AccountAction.editSupervisor
+
+#**********************************************系统设计***********************************************************
+# -----------------------------------------------安全设计-----------------------------------------------------------
+#安全云盾
+GET		/supervisor/SecuritySettingAction/UKeyList 								supervisor.systemSettings.SecuritySettingAction.UKeyList
+#安全参数设置
+GET		/supervisor/SecuritySettingAction/safeParam   							supervisor.systemSettings.SecuritySettingAction.safeParam
+POST	/supervisor/SecuritySettingAction/saveSafeParam   						supervisor.systemSettings.SecuritySettingAction.saveSafeParam
+#安全问题设置
+GET		/supervisor/SecuritySettingAction/safeQuestion 							supervisor.systemSettings.SecuritySettingAction.safeQuestion
+POST	/supervisor/SecuritySettingAction/addsafeQuestion 						supervisor.systemSettings.SecuritySettingAction.addsafeQuestion
+POST	/supervisor/SecuritySettingAction/updateSafeQuestion 					supervisor.systemSettings.SecuritySettingAction.updateSafeQuestion
+#详情
+GET		/supervisor/SecuritySettingAction/UKeyListDetail 						supervisor.systemSettings.SecuritySettingAction.UKeyListDetail
+#编辑UKey
+GET		/supervisor/SecuritySettingAction/updateUKey 							supervisor.systemSettings.SecuritySettingAction.updateUKey
+#添加安全云盾
+GET		/supervisor/SecuritySettingAction/addUKey 								supervisor.systemSettings.SecuritySettingAction.addUKey
+#添加安全云盾时选择管理员
+GET		/supervisor/SecuritySettingAction/selectSupervisor 						supervisor.systemSettings.SecuritySettingAction.selectSupervisor
+#添加新的安全问题
+GET		/supervisor/SecuritySettingAction/addQuestion 							supervisor.systemSettings.SecuritySettingAction.addQuestion
+#数据初始化管理
+GET		/supervisor/DBOperationAction/db 										supervisor.systemSettings.DBOperationAction.db
+#清空数据
+POST	/supervisor/DBOperationAction/clearData 								supervisor.systemSettings.DBOperationAction.clearData
+#重置(还原出厂设置)
+POST	/supervisor/DBOperationAction/reset 									supervisor.systemSettings.DBOperationAction.reset
+#从操作记录还原
+POST	/supervisor/DBOperationAction/recoverFromOperation 						supervisor.systemSettings.DBOperationAction.recoverFromOperation
+#备份
+POST	/supervisor/DBOperationAction/backup 									supervisor.systemSettings.DBOperationAction.backup
+
+# -----------------------------------------------财务设置-----------------------------------------------------------
+#服务费设置
+GET		/supervisor/FinanceSettingAction/serviceFees 							supervisor.systemSettings.FinanceSettingAction.serviceFees
+POST	/supervisor/FinanceSettingAction/saveServiceFees 						supervisor.systemSettings.FinanceSettingAction.saveServiceFees
+#支付方式管理
+POST	/supervisor/FinanceSettingAction/savePayment 							supervisor.systemSettings.FinanceSettingAction.savePayment
+#支付方式保存
+GET		/supervisor/FinanceSettingAction/payment 								supervisor.systemSettings.FinanceSettingAction.payment
+POST	/supervisor/FinanceSettingAction/savePayment 							supervisor.systemSettings.FinanceSettingAction.savePayment
+#应付账单管理
+GET		/supervisor/FinanceSettingAction/payableBills    						supervisor.systemSettings.FinanceSettingAction.payableBills
+POST	/supervisor/FinanceSettingAction/saveBillsPayable    					supervisor.systemSettings.FinanceSettingAction.saveBillsPayable
+#资金托管账户设置
+*		/supervisor/FinanceSettingAction/managedFunds 							supervisor.systemSettings.FinanceSettingAction.managedFunds
+#资金托管账户设置(保存)
+POST	/supervisor/FinanceSettingAction/saveManagedFunds 						supervisor.systemSettings.FinanceSettingAction.saveManagedFunds
+#资金托管接入平台设置
+*	/supervisor/FinanceSettingAction/joinSetting 								supervisor.systemSettings.FinanceSettingAction.joinSetting
+#资金托管接入平台设置(保存)
+*	/supervisor/FinanceSettingAction/saveJoinSetting 							supervisor.systemSettings.FinanceSettingAction.saveJoinSetting
+#资金托管接入平台设置详情
+*	/supervisor/FinanceSettingAction/bindPlatform 							supervisor.systemSettings.FinanceSettingAction.bindPlatform
+#资金托管接入平台设置(更新)
+*	/supervisor/FinanceSettingAction/updatePlatform 							supervisor.systemSettings.FinanceSettingAction.updatePlatform
+#用户操作记录
+GET		/supervisor/FinanceSettingAction/dealDetails 							supervisor.systemSettings.FinanceSettingAction.dealDetails
+#平台交易记录
+GET		/supervisor/FinanceSettingAction/eventDetails 							supervisor.systemSettings.FinanceSettingAction.eventDetails
+#系统积分规则
+GET		/supervisor/FinanceSettingAction/systemScoreRule   						supervisor.systemSettings.FinanceSettingAction.systemScoreRule
+#系统积分规则设置
+POST	/supervisor/FinanceSettingAction/setSystemScoreRule   					supervisor.systemSettings.FinanceSettingAction.setSystemScoreRule
+
+# -----------------------------------------------管理员管理-----------------------------------------------------------
+#系统管理员列表
+GET		/supervisor/supervisorAction/list										supervisor.systemSettings.supervisorAction.list
+#添加管理员初始化
+POST	/supervisor/supervisorAction/createSupervisorInit						supervisor.systemSettings.supervisorAction.createSupervisorInit
+#添加管理员
+POST	/supervisor/supervisorAction/createSupervisor							supervisor.systemSettings.supervisorAction.createSupervisor
+#编辑管理员初始化
+POST	/supervisor/supervisorAction/editSupervisorInit							supervisor.systemSettings.supervisorAction.editSupervisorInit
+#编辑管理员
+POST	/supervisor/supervisorAction/editSupervisor								supervisor.systemSettings.supervisorAction.editSupervisor
+#设置管理员的权限组页面
+POST	/supervisor/supervisorAction/selectGroupsOfSupervisorInit				supervisor.systemSettings.supervisorAction.selectGroupsOfSupervisorInit
+#设置管理员的权限组
+POST	/supervisor/supervisorAction/setGroupsOfSupervisor						supervisor.systemSettings.supervisorAction.setGroupsOfSupervisor	
+#查看详情
+POST	/supervisor/supervisorAction/detail										supervisor.systemSettings.supervisorAction.detail
+#设置权限页面
+POST	/supervisor/supervisorAction/setRightsInit								supervisor.systemSettings.supervisorAction.setRightsInit
+#设置权限
+POST	/supervisor/supervisorAction/setRights									supervisor.systemSettings.supervisorAction.setRights
+#锁定/启用
+POST	/supervisor/supervisorAction/enable										supervisor.systemSettings.supervisorAction.enable
+#删除管理员
+POST	/supervisor/supervisorAction/deleteSupervisor							supervisor.systemSettings.supervisorAction.deleteSupervisor
+#管理员重置密码
+GET 	/supervisor/supervisorAction/resetPassword							    supervisor.systemSettings.supervisorAction.resetPassword
+
+# -----------------------------------------------权限管理-----------------------------------------------------------
+#权限地图
+GET		/supervisor/rightAction/rightsMap 										supervisor.systemSettings.rightAction.rightsMap	
+#权限管理
+GET		/supervisor/rightAction/rightsManage 									supervisor.systemSettings.rightAction.rightsManage	
+#添加权限组页面		
+POST	/supervisor/rightAction/addRightGroupInit 								supervisor.systemSettings.rightAction.addRightGroupInit
+#添加权限组
+POST	/supervisor/rightAction/addRightGroup 									supervisor.systemSettings.rightAction.addRightGroup
+#编辑权限组页面
+POST	/supervisor/rightAction/editRightGroupInit 								supervisor.systemSettings.rightAction.editRightGroupInit
+#编辑权限组
+POST	/supervisor/rightAction/editRightGroup 									supervisor.systemSettings.rightAction.editRightGroup
+#编辑权限组名单页面	
+POST	/supervisor/rightAction/setGroupRosterInit 								supervisor.systemSettings.rightAction.setGroupRosterInit
+#编辑权限组名单
+POST	/supervisor/rightAction/setGroupRoster 									supervisor.systemSettings.rightAction.setGroupRoster
+#权限组权限设置页面		
+POST	/supervisor/rightAction/setGroupRightsInit 								supervisor.systemSettings.rightAction.setGroupRightsInit
+#权限组权限设置
+POST	/supervisor/rightAction/setGroupRights 									supervisor.systemSettings.rightAction.setGroupRights
+#查询管理员通过账号
+POST	/supervisor/rightAction/querySupervisorByName 							supervisor.systemSettings.rightAction.querySupervisorByName
+#选择管理员名单页面
+POST	/supervisor/rightAction/selectGroupRosterInit 							supervisor.systemSettings.rightAction.selectGroupRosterInit
+#选择管理员页面
+POST	/supervisor/rightAction/selectSupervisorInit 							supervisor.systemSettings.rightAction.selectSupervisorInit
+#添加管理员
+POST	/supervisor/rightAction/addSupervisor 									supervisor.systemSettings.rightAction.addSupervisor
+#删除权限组
+POST	/supervisor/rightAction/deleteRightGroup 								supervisor.systemSettings.rightAction.deleteRightGroup
+
+# -----------------------------------------------第三方通道设置-----------------------------------------------------------
+#短信通道
+GET		/supervisor/TripartiteSettingAction/SMSPassage 							supervisor.systemSettings.TripartiteSettingAction.SMSPassage
+#短信通道 保存短信通道
+POST	/supervisor/TripartiteSettingAction/saveSMS 							supervisor.systemSettings.TripartiteSettingAction.saveSMS
+#邮件通道
+GET		/supervisor/TripartiteSettingAction/mailPassage 						supervisor.systemSettings.TripartiteSettingAction.mailPassage
+#邮件通道 保存邮件通道
+POST	/supervisor/TripartiteSettingAction/saveMail 							supervisor.systemSettings.TripartiteSettingAction.saveMail								
+
+# -----------------------------------------------操作日志管理-----------------------------------------------------------
+#操作日志列表
+GET		/supervisor/LogManagerAction/logs 										supervisor.systemSettings.LogManagerAction.logs
+#删除操作日志页面
+GET		/supervisor/LogManagerAction/deleteLogsInit 							supervisor.systemSettings.LogManagerAction.deleteLogsInit
+#删除操作日志
+POST	/supervisor/LogManagerAction/deleteLogs 								supervisor.systemSettings.LogManagerAction.deleteLogs							
+
+# -----------------------------------------------软件授权设置-----------------------------------------------------------
+#系统基本资料设置		
+GET		/supervisor/SoftwareLicensAction/basicInfo 								supervisor.systemSettings.SoftwareLicensAction.basicInfo
+#系统基本资料设置 上传图片	
+POST	/supervisor/SoftwareLicensAction/upload 								supervisor.systemSettings.SoftwareLicensAction.upload
+#系统基本资料设置 编辑基本资料		
+POST	/supervisor/SoftwareLicensAction/saveSystemData 						supervisor.systemSettings.SoftwareLicensAction.saveSystemData
+#系统基本资料设置 获取省份	
+POST	/supervisor/SoftwareLicensAction/getProvinces 							supervisor.systemSettings.SoftwareLicensAction.getProvinces
+#软件正版注册
+GET		/supervisor/SoftwareLicensAction/genuineSoftware 						supervisor.systemSettings.SoftwareLicensAction.genuineSoftware
+#软件正版注册信息->已注册						
+GET		/supervisor/SoftwareLicensAction/register 								supervisor.systemSettings.SoftwareLicensAction.register
+#软件正版注册信息->未注册	
+GET		/supervisor/SoftwareLicensAction/notRegister 							supervisor.systemSettings.SoftwareLicensAction.notRegister
+POST	/supervisor/SoftwareLicensAction/saveSoftwareLicens 					supervisor.systemSettings.SoftwareLicensAction.saveSoftwareLicens
+
+#汇付资金托管路由
+GET		/PNRPayment/pnr 														PNR.ChinaPnrPayment.pnr
+*		/PNRPayment/doCallBack 													PNR.ChinaPnrPayment.doCallBack
+GET 	/prepare/hfmanager  													Prepare.hfmanager
+GET		/chinapnr/index 														PNR.ChinaPnrQuery.index
+GET		/chinapnr/queryTransStat 												PNR.ChinaPnrQuery.queryTransStat
+GET /chinapnr/autotest																PNR.AutoInterfaceTest.index
+
+
+POST /guo/creferere                         GUO.GPayment.cleanReferer
+
+# Catch all
+#*      /{controller}/{action}                  									{controller}.{action}
+

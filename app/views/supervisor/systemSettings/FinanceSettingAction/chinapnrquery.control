@@ -1,0 +1,78 @@
+<div class="xn_c_content">
+  <div class="xf_ht_tablelist">
+    <!-- 搜索 -->
+    #{form @PNR.ChinaPnrQuery.queryTransStat(), id:'readyReleaseList'}
+    <div class="xf_ht_search_inon">
+      <div class="xf_ht_search_r">
+	    <div class="xf_ht_search_xl">
+		  <span class="search_timesp">	订单号：</span>
+		  <input type="text" name="ordId" value='${queryTrans?.OrdId}' />
+		  <span class="search_timesp">	交易查询类型：</span>
+		  <select name="queryTransType">
+							<option value="LOANS" #{if queryTrans?.QueryTransType == 'LOANS'} selected='selected'#{/if}>放款交易查询</option>
+							<option value="REPAYMENT"  #{if queryTrans?.QueryTransType == 'REPAYMENT'} selected='selected'#{/if}>还款交易查询</option>
+							<option value="TENDER"  #{if queryTrans?.QueryTransType == 'TENDER'} selected='selected'#{/if}>投标交易查询</option>
+							<option value="CASH"  #{if queryTrans?.QueryTransType == 'CASH'} selected='selected'#{/if}>取现交易查询</option>
+		  </select>
+		  <span class="search_timesp">	订单日期：</span>
+		  <input type="text" class="search_time" name="ordDate" onclick="laydate()" class="laydate-icon" style="cursor:pointer" value="${queryTrans?.OrdDate}" />
+		 
+		  <input type="submit" value="提交">
+	    </div>
+      </div>
+    </div>
+    #{/form}
+    <!-- 列表内容 -->
+    <div class="xn_c_content_top">
+      #{table class:"xn_c_content_list", cellspacing:"0", cellpadding:"0", border:"0",width:"1300px", tr_class_odd:"xn_tr_bj"}
+        #{tr}
+          #{th}消息类型#{/th}
+		  #{th}应答返回码#{/th}
+          #{th}应答描述#{/th}
+          #{th}商户客户号#{/th}
+          #{th}订单号#{/th}
+          #{th}订单日期#{/th}
+          #{th}交易查询类型#{/th}
+          #{th}汇付交易状态#{/th}
+        #{/tr}
+		#{tr}
+		  #{td}${queryTrans?.CmdId}#{/td}
+		  #{td}${queryTrans?.RespCode}#{/td}
+		  #{td}${queryTrans?.RespDesc}#{/td}
+		  #{td}${queryTrans?.MerCustId}#{/td}
+		  #{td}${queryTrans?.OrdId}#{/td}
+		  #{td}${queryTrans?.OrdDate}#{/td}
+		  #{td}${queryTrans?.QueryTransType}#{/td}
+		  #{td}${queryTrans?.TransStat}#{/td}
+	    #{/tr}
+      #{/table}
+    </div>
+    <!-- 列表底部 -->
+    <div class="xn_c_content_bottom">
+      <div class="page_warp">
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+  $(function(){
+    showHighLight(2,2,24);
+	/* 给搜索条件赋记录值 */
+	var condition = "${pageBean?.conditions?.condition}";
+	var orderStatus = "${pageBean?.conditions?.orderStatus}";
+	$("#orderStatus").val(orderStatus);
+	$("#mySelect").val("${pageBean?.conditions?.condition}");
+	
+    /* 初始为默认搜索 */
+    if(orderStatus%2 == 0){
+      $("#order"+orderStatus).attr("class", "xf_sea_isshow");
+      $("#sp"+orderStatus).html("↑");
+    }else{
+      orderStatus -= 1;
+      $("#order"+orderStatus).attr("class", "xf_sea_isshow");
+      $("#sp"+orderStatus).html("↓");
+    }
+  });
+    </script>
+    
