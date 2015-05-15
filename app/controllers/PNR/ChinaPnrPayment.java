@@ -2391,8 +2391,9 @@ public class ChinaPnrPayment extends BaseController {
 				.putValue("BgRetUrl", bgRetUrl).putValue("RetUrl", retUrl)
 				.putValue("IdNo", idNo)
 				.putValue("UsrName", usrName).putValue("UsrMp", usrMp)
-				.putValue("UsrEmail", usrEmail).
-				putValue("MerPriv", MerPriv).setChkValue();
+				.putValue("UsrEmail", usrEmail)
+				.putValue("UsrId", usrMp)
+				.putValue("MerPriv", MerPriv).setChkValue();
 		addEvent(memberId, type+200, platform, json.getString("pMerBillNo"),pWebUrl,pS2SUrl, p2pExtra.toString(), null);
 		addDealDetail(memberId,platform,json.getString("pMerBillNo"),type,0.00,false,"用户开户");
 		return maps;

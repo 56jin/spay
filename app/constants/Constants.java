@@ -215,7 +215,7 @@ public class Constants {
 	public static final int PRODUCT_INTRODUCTION = 1; // 借款产品简介
 	public static final int PRODUCT_DETAIL_INTRODUCTION = 2; // 借款产品详细描述
 	public static final int APPLICANT_CONDITION = 3; // 申请人条件
-	public static final int DAY_INTEREST = 360; // 日利息结算常量
+	public static final int DAY_INTEREST = 365; // 日利息结算常量
 	
 	public static final int PC = 1; // PC端
 	public static final int APP = 2; // APP端
