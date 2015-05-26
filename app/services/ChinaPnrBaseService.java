@@ -1,21 +1,11 @@
 package services;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.Serializable;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import org.apache.commons.io.IOUtils;
+import chinapnr.SecureLink;
+import com.google.gson.JsonNull;
+import com.google.gson.JsonObject;
+import com.google.gson.JsonParser;
+import constants.ChinaPnrConstants;
+import constants.Constants;
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpStatus;
 import org.apache.http.NameValuePair;
@@ -28,19 +18,15 @@ import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClients;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
-
 import play.Logger;
 import play.libs.Codec;
-import utils.DateUtil;
-import utils.FileUtil;
-import chinapnr.SecureLink;
 
-import com.google.gson.JsonNull;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import constants.ChinaPnrConstants;
-import constants.Constants;
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.util.*;
+import java.util.Map.Entry;
 
 /**
  * 汇付天下支付服务类基类
@@ -115,8 +101,7 @@ public class ChinaPnrBaseService extends LinkedHashMap<String, String> implement
 			SecureLink sl = new SecureLink();
 			int ret = 0;
 			try {
-				
-				ret = sl.SignMsg(ChinaPnrConfig.getProperty("chinapnr_merId"), ChinaPnrConfig.getProperty("chinapnr_merKeyFile"), buffer.toString().getBytes("utf-8"));
+				ret = sl.SignMsg(SignUtils.RECV_MER_ID, SignUtils.MER_PRI_KEY_PATH, buffer.toString().getBytes("utf-8"));
 				
 			} catch (UnsupportedEncodingException e) {
 				

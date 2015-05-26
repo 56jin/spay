@@ -1,21 +1,16 @@
 package services;
 
+import business.GateWay;
+import constants.Constants;
+import models.t_payment_gateways;
+import play.Logger;
+import play.Play;
+
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-
-import models.t_payment_gateways;
-import constants.Constants;
-import business.GateWay;
-import play.Logger;
-import play.Play;
+import java.util.*;
 
 /**
  * 汇付天下配置信息读取类
@@ -34,7 +29,7 @@ public class ChinaPnrConfig{
 	private static Map<String,String[]> maps = null;
 	
 	//汇付天下配置文件路径,加载Properties文件使用
-	private static final String path = Play.configuration.getProperty("chinapnrconfigpath"); 
+	private static final String path = Play.applicationPath + Play.configuration.getProperty("chinapnrconfigpath");
 
 	static{
 		if(properties==null){
@@ -57,7 +52,7 @@ public class ChinaPnrConfig{
 		Logger.debug("读取ChinaPnr配置文件...");
 		properties = new Properties();
 		try {
-			properties.load(new FileInputStream(new File(path))); 
+			properties.load(new FileInputStream(new File(path)));
 			
 			//商户号保存至数据库
 			t_payment_gateways gatway = readGateWay();
