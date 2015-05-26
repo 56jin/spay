@@ -2,6 +2,7 @@ package services;
 
 import java.io.Serializable;
 
+import play.Play;
 import chinapnr.SecureLink;
 
 /**
