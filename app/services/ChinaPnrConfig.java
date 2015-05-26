@@ -29,7 +29,7 @@ public class ChinaPnrConfig{
 	private static Map<String,String[]> maps = null;
 	
 	//汇付天下配置文件路径,加载Properties文件使用
-	private static final String path = Play.applicationPath + Play.configuration.getProperty("chinapnrconfigpath");
+	private static final String path = Play.configuration.getProperty("chinapnrconfigpath");
 
 	static{
 		if(properties==null){
