@@ -66,9 +66,9 @@ jdk1.6  play-1.2.7
 
 1. ±¾µØ:play war -o myapp.war
 
-2. dev:play war -o myapp.war --%%dev
+2. dev:play war -o myapp.war --%dev
 
-3. test:play war -o myapp.war --%%test
+3. test:play war -o myapp.war --%test
 
 
 
