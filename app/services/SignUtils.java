@@ -26,10 +26,10 @@ public class SignUtils implements Serializable {
     public static final String RECV_MER_ID             = ChinaPnrConfig.getProperty("chinapnr_merId");
 
     /** 商户公钥文件地址 **/
-    public static final String MER_PUB_KEY_PATH        = ChinaPnrConfig.getProperty("chinapnr_PgPubkFile");
+    public static final String MER_PUB_KEY_PATH        =  Play.applicationPath + ChinaPnrConfig.getProperty("chinapnr_PgPubkFile");
 
     /** 商户私钥文件地址 **/
-    public static final String MER_PRI_KEY_PATH        = ChinaPnrConfig.getProperty("chinapnr_merKeyFile");
+    public static final String MER_PRI_KEY_PATH        = Play.applicationPath + ChinaPnrConfig.getProperty("chinapnr_merKeyFile");
     
     /**
      * RSA方式加签
