@@ -116,6 +116,8 @@ public class ChinaPnrPayment extends BaseController {
 //		与使用平台的校验
         Logger.debug("argMerCode:%s"+argMerCode+"\n arg3DesXmlPara:%s"+arg3DesXmlPara+"\n extra:%s"+extra+"\n argSign:%s"+argSign);
 
+        arg3DesXmlPara = arg3DesXmlPara == null ? "" : arg3DesXmlPara;
+        extra = extra == null ? "" : extra;
         if(!PaymentUtil.expansionCheckSign(argMerCode+arg3DesXmlPara+extra, argSign)) {
             Logger.debug("------------------------资金托管平台校验失败-------------------------------");
             flash.error("sign校验失败");
@@ -1163,11 +1165,18 @@ public class ChinaPnrPayment extends BaseController {
         String cmdId = ChinaPnrConstants.CMD_NETSAVE;
         String merCustId = ChinaPnrConfig.getProperty("chinapnr_merCustId");
         String usrCustId = json.getString("pIpsAcctNo");
-//		String usrCustId = ChinaPnrConfig.getProperty("chinapnr_merCustId");
         String ordId = json.getString("pMerBillNo");
         String transAmt = json.getString("pTrdAmt");
         String pChannelType = json.getString("pChannelType");
-        String gateBusiId = "2".equals(pChannelType) ? "WH" : "B2B";
+        String gateBusiId = "";
+        if ("3".equals(pChannelType)) {
+            gateBusiId = "QP";//快捷
+        }else if ("1".equals(pChannelType)) {
+            gateBusiId = "B2B";//网银
+        }else{
+            gateBusiId = "WH";//代扣
+        }
+
         String bgRetUrl = ChinaPnrConfig.getProperty("chinapnr_retUrlBg");
         String retUrl = ChinaPnrConfig.getProperty("chinapnr_retUrl");
 
@@ -1181,9 +1190,10 @@ public class ChinaPnrPayment extends BaseController {
         maps.putValue("Version", version).putValue("CmdId", cmdId)
                 .putValue("MerCustId", merCustId)
                 .putValue("UsrCustId", usrCustId).putValue("OrdId", ordId)
-                .putValue("OrdDate", now).putValue("TransAmt", transAmt)
-                .putValue("BgRetUrl", bgRetUrl)
+                .putValue("OrdDate", now)
                 .putValue("GateBusiId", gateBusiId)
+                .putValue("TransAmt", transAmt)
+                .putValue("BgRetUrl", bgRetUrl)
                 .putValue("RetUrl", retUrl);
         maps.setChkValue();
 
@@ -2520,8 +2530,12 @@ public class ChinaPnrPayment extends BaseController {
         if (userAgentHeader != null && StringUtils.isNotEmpty(userAgentHeader.value())){
             String userAgent = userAgentHeader.value();
             Logger.info("User-Agent:" + userAgent);
-            if (userAgent.contains("Mobile") && userAgent.contains("jindoujialicai")) {
-                paramMap.put("fromApp", "Y");
+            if (userAgent.contains("Mobile") || userAgent.contains("mobile")) {
+                if (userAgent.contains("jindoujialicai")) {
+                    paramMap.put("fromApp", "Y");
+                }else{
+                    paramMap.put("fromH5", "Y");
+                }
             }
         }
 
@@ -2618,19 +2632,20 @@ public class ChinaPnrPayment extends BaseController {
     private static void excute(Map<String, String> params) {
         String cmdId = params.get("CmdId");
         boolean fromApp = "Y".equals(params.get("fromApp")) ? true : false;
+        boolean fromH5 = "Y".equals(params.get("fromH5")) ? true : false;
         //add by yangxuan 2014-12-17 start
         //汇付开发文档可能会存在打印标志错误，所以把三个字段全部输出到界面
 
         String appValue = null;
-        if (!fromApp) {
-            printFlag(params.get(TRXID));
-            printFlag(params.get(ORDID));
-            printFlag(params.get(PROID));
-        }else{
+        if (fromApp) {
             String trxId = "订单:RECV_ORD_ID_" + params.get(TRXID);
             String ordId = "订单:RECV_ORD_ID_" + params.get(ORDID);
             String proId = "订单:RECV_ORD_ID_" + params.get(PROID);
             appValue = trxId + ordId + proId;
+        }else{
+            printFlag(params.get(TRXID));
+            printFlag(params.get(ORDID));
+            printFlag(params.get(PROID));
         }
 
         //added
@@ -2744,12 +2759,9 @@ public class ChinaPnrPayment extends BaseController {
                 WS.url(url).setParameters(baseParams).post();
 
                 renderAppMsg(cmdId, resultAsy, appValue);
-            }else{
+            }else
                 submitByFront(maps);
             }
-
-        }
-
     }
 
     private static void renderAppMsg(String cmdId, String result, String appValue){
@@ -2882,9 +2894,6 @@ public class ChinaPnrPayment extends BaseController {
         maps.setPsign(keys);
         String action = event.front_url;
         String aysnAction = event.background_url;
-
-//        String action = "http://127.0.0.1:9000/front/PaymentAction/createAcctCB";
-//        String aysnAction = "http://127.0.0.1:9000/front/PaymentAction/createAcctCBSys";
 
         return buildSubmitParams(action,aysnAction,maps);
     }
