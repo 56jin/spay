@@ -19,12 +19,13 @@ public enum MsgCode {
     UER_REGISTER_SUCC("0601", "用户开户成功"),
     NET_SAVE_SUCC("0602", "充值成功"),
     INVEST_SUCC("0603", "投标成功"),
+    CASH_SUCC("0604", "取现成功"),
 
 
     UER_REGISTER_FALL("2601", "用户开户失败"),
     NET_SAVE_FALL("2602", "充值失败"),
     INVEST_FALL("2603", "投标失败"),
-
+    CASH_FALL("2604", "取现失败"),
 
 
     ;

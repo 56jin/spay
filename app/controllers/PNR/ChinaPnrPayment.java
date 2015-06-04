@@ -2786,6 +2786,9 @@ public class ChinaPnrPayment extends BaseController {
         }else if (ChinaPnrConstants.CMD_INITIATIVETENDER.equals(cmdId)) {//投标
             messageMap.put("code", successFlag ? MsgCode.INVEST_SUCC.getCode() : MsgCode.INVEST_FALL.getCode());
             messageMap.put("summary", successFlag ? MsgCode.INVEST_SUCC.getMessage() : msg);
+        }else if (ChinaPnrConstants.CMD_CASH.equals(cmdId)) {
+            messageMap.put("code", successFlag ? MsgCode.CASH_SUCC.getCode() : MsgCode.CASH_FALL.getCode());
+            messageMap.put("summary", successFlag ? MsgCode.CASH_SUCC.getMessage() : msg);
         }
 
         Map<String, Object> jsonMap= new HashMap<String, Object>();
