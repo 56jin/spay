@@ -26,11 +26,7 @@ GET     /guo                                      								Payment2.guo
 POST    /callback                                      							Payment2.callback
 POST    /back                                      								PaymentTest.back
 
-#易宝资金托管路由
-GET     /yee/transfer                                     						YEE.YEEPayment.transfer
-*       /yee/callBack                                     						YEE.YEEPayment.callBack
-*       /yee/notifys                                     						YEE.YEEPayment.notifys
-*       /yee/logFileList~[path]                                     			YEE.YEEPayment.logFileList
+
 
 #-------------------------------------双乾--------------------------------------------------------------------
 #中间件向双乾提供的回调接口地址 

@@ -1,26 +1,22 @@
 package controllers;
 
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import play.Logger;
-import services.IPS;
-import utils.ErrorInfo;
-import utils.PaymentUtil;
-import utils.loan.LoanUtil;
 import business.Platform;
-
 import com.shove.security.Encrypt;
-
 import constants.Constants;
 import constants.IPSConstants;
 import constants.LoanConstants;
 import controllers.GUO.GPayment;
 import controllers.IPS.IPayment;
 import controllers.PNR.ChinaPnrPayment;
-import controllers.YEE.YEEPayment;
 import controllers.loan.LoanController;
+import org.apache.commons.lang.StringUtils;
+import play.Logger;
+import services.IPS;
+import utils.ErrorInfo;
+import utils.PaymentUtil;
+import utils.loan.LoanUtil;
+
+import java.util.Map;
 
 /**
  * 中间件支付控制器入口
@@ -145,20 +141,7 @@ public class Payment  extends BaseController {
 				  chinaPnrPayment.pnr(platform.domain, type, (int)platform.id, memberId, memberName, argMerCode,  arg3DesXmlPara,extra, argSign, argIpsAccount,isWS);
 				  break;
 			}
-			//易宝
-			case Constants.YEE:{
-				String arg3DesXmlPara = params.get("arg3DesXmlPara");  //xml通过3des加密的参数
-				String argSign = params.get("argSign");  //md5加密之后的校验参数
-				String argIpsAccount = params.get("argIpsAccount");  //第三方客户号
-				String autoInvest = params.get("autoInvest");  //自动投标标志
-				String wsUrl = params.get("wsUrl");  //异步回调地址
-				String argeXtraPara = params.get("argeXtraPara")==null?"":params.get("argeXtraPara");  //xml通过3des加密的参数2, 针对版本2.0添加的所需参数
-				String isWs = params.get("isWS");  //异步回调地址
-				
-		        YEEPayment.getInstance().transfer(platform.gatewayId, platform.domain, type, (int)platform.id, memberId, memberName, 
-		        		argSign, argIpsAccount, autoInvest, wsUrl, arg3DesXmlPara, argeXtraPara, isWs);
-				break;
-			}
+
 			//双乾
 			case Constants.LOAN:{
 				String argMerCode = params.get("argMerCode");
