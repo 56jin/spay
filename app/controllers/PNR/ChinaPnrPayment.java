@@ -2522,21 +2522,11 @@ public class ChinaPnrPayment extends BaseController {
         String reqparams = null;
 
         //判断 是否 是app端调用
-        Http.Header userAgentHeader = request.headers.get("User-Agent");
-        if (userAgentHeader == null) {
-            userAgentHeader = request.headers.get("user-agent");
-        }
-
-        if (userAgentHeader != null && StringUtils.isNotEmpty(userAgentHeader.value())){
-            String userAgent = userAgentHeader.value();
-            Logger.info("User-Agent:" + userAgent);
-            if (userAgent.contains("Mobile") || userAgent.contains("mobile")) {
-                if (userAgent.contains("jindoujialicai")) {
-                    paramMap.put("fromApp", "Y");
-                }else{
-                    paramMap.put("fromH5", "Y");
-                }
-            }
+        String client = ParseClientUtil.parseClient(request);
+        if (ParseClientUtil.APP.equals(client)) {
+            paramMap.put("fromApp", "Y");
+        }else if (ParseClientUtil.H5.equals(client)) {//暂时未用到
+            paramMap.put("fromH5", "Y");
         }
 
         try {
