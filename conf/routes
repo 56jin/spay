@@ -18,16 +18,6 @@ GET     /error                            										Application.error
 #资金托管路由
 #POST   /payment/spay                      										Payment.spay
 *    	/payment/spay                      										Payment.spay
-GET    	/ips/ips                      											IPS.IPayment.ips
-POST    /ips/ipsCommit                      									IPS.IPayment.ipsCommit
-POST    /ips/ipsCommitAsynch                      								IPS.IPayment.ipsCommitAsynch
-GET     /payment2                                      							Payment2.payment
-GET     /guo                                      								Payment2.guo
-POST    /callback                                      							Payment2.callback
-POST    /back                                      								PaymentTest.back
-
-
-
 
 
 
@@ -230,9 +220,6 @@ GET 	/prepare/hfmanager  													Prepare.hfmanager
 GET		/chinapnr/index 														PNR.ChinaPnrQuery.index
 GET		/chinapnr/queryTransStat 												PNR.ChinaPnrQuery.queryTransStat
 GET /chinapnr/autotest																PNR.AutoInterfaceTest.index
-
-
-POST /guo/creferere                         GUO.GPayment.cleanReferer
 
 # Catch all
 #*      /{controller}/{action}                  									{controller}.{action}

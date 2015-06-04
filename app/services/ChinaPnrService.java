@@ -1,26 +1,11 @@
 package services;
 
-import java.io.Serializable;
-import java.util.HashMap;
-import java.util.Map;
-
-import org.junit.Test;
-
-import play.Logger;
-import play.libs.WS;
-import play.libs.WS.HttpResponse;
-
-import com.google.gson.JsonArray;
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
-
-import business.DealDetail;
-import constants.IPSConstants;
 import constants.ChinaPnrConstants;
-import controllers.PNR.ChinaPnrPayment.Random;
 import models.ChinaPnrReqModel;
+import org.junit.Test;
 import utils.DateUtil;
+
+import java.io.Serializable;
 
 /**
  * 汇付天下Service类

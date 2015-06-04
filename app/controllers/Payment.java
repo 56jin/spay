@@ -3,16 +3,10 @@ package controllers;
 import business.Platform;
 import com.shove.security.Encrypt;
 import constants.Constants;
-import constants.IPSConstants;
-import controllers.IPS.IPayment;
 import controllers.PNR.ChinaPnrPayment;
 import org.apache.commons.lang.StringUtils;
 import play.Logger;
-import services.IPS;
 import utils.ErrorInfo;
-import utils.PaymentUtil;
-
-import java.util.Map;
 
 /**
  * 中间件支付控制器入口
@@ -57,62 +51,7 @@ public class Payment extends BaseController {
 
         Logger.info("------------version = " + version + "\n" + "------------请求的支付平台：" + platform.gatewayId + "\n------------请求的接口：" + type + "--");
 
-        if (Constants.VERSION1.equals(version)) {
-            switch (platform.gatewayId) {
-                //环迅
-                case Constants.IPS: {
-                    String argMerCode = params.get("argMerCode");
-                    String arg3DesXmlPara = params.get("arg3DesXmlPara");
-                    String argSign = params.get("argSign");
-                    String argIpsAccount = params.get("argIpsAccount");
-                    String argMemo = params.get("argMemo");
-                    String flow = params.get("flow");
-                    String autoInvest = params.get("autoInvest");
-                    String autoPayment = params.get("autoPayment");
-                    String wsUrl = params.get("wsUrl");
-
-                    if (type == IPSConstants.TRANSFER || type == IPSConstants.DEDUCT) {
-                    /*与使用平台的校验*/
-                        if (!PaymentUtil.checkSign(argMerCode, arg3DesXmlPara, argSign)) {
-                            Logger.info("------------------------资金托管平台校验失败-------------------------------");
-                            flash.error("sign校验失败");
-                            Application.error();
-                        }
-
-                        String transferInfo = IPS.transfer((int) platform.id, memberId, type, argMerCode, arg3DesXmlPara, error);
-                        Logger.info("---------------transferInfo:" + transferInfo + "-----------");
-                        renderText(transferInfo);
-                    }
-				
-				/*自动还款*/
-                    if (type == IPSConstants.REPAYMENT && IPSConstants.AUTO_PAYMENT.equals(autoPayment)) {
-					/*与使用平台的校验*/
-                        if (!PaymentUtil.checkSign(argMerCode, arg3DesXmlPara, argSign)) {
-                            Logger.info("------------------------资金托管平台校验失败-------------------------------");
-                            flash.error("sign校验失败");
-                            Application.error();
-                        }
-
-                        Map<String, String> args = IPS.entrance(type, (int) platform.id, memberId, memberName, argMerCode, Encrypt.decrypt3DES(arg3DesXmlPara, Constants.ENCRYPTION_KEY), argSign);
-                        String autoPaymentInfo = IPS.autoPayment(args, error);
-
-                        if (error.code < 0) {
-                            flash.error(error.msg);
-                            Application.error();
-                        }
-                        Logger.info("---------------autoInvestInfo:" + autoPaymentInfo + "-----------");
-                        renderText(autoPaymentInfo);
-                    }
-
-                    if (platform.useType == 1) {
-                        IPayment.ipsTest(type, (int) platform.id, memberId, memberName, argMerCode, arg3DesXmlPara, argSign, argIpsAccount, argMemo);
-                    } else {
-                        IPayment.ips(platform.domain, type, (int) platform.id, memberId, memberName, argMerCode, arg3DesXmlPara, argSign, argIpsAccount, argMemo, flow, autoInvest, autoPayment, wsUrl);
-                    }
-                    break;
-                }
-            }
-        } else if (Constants.VERSION2.equals(version)) {
+        if (Constants.VERSION2.equals(version)) {
             switch (platform.gatewayId) {
                 //汇付
                 case Constants.PNR: {

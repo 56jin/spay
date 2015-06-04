@@ -1,28 +1,22 @@
 package controllers.supervisor.systemSettings;
 
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.lang.StringUtils;
-
-import models.t_dict_payment_gateways;
+import business.GateWay;
+import business.Member;
+import business.Platform;
+import constants.Constants;
+import controllers.supervisor.SupervisorController;
 import models.t_payment_gateways;
 import models.v_member_details;
 import models.v_member_events;
 import models.v_platforms;
-import constants.Constants;
-import constants.IPSConstants;
-import controllers.supervisor.SupervisorController;
-import business.BackstageSet;
-import business.GateWay;
-import business.Member;
-import business.Platform;
-import play.db.jpa.JPA;
-import play.mvc.Controller;
+import org.apache.commons.lang.StringUtils;
 import utils.ErrorInfo;
 import utils.PageBean;
+
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * 财务设置
@@ -74,70 +68,18 @@ public class FinanceSettingAction extends SupervisorController {
 		
 		GateWay gateway = new GateWay();
 		Map<String, String> keyInfo = new HashMap<String, String>();
-		
-		switch((int)gatewayId) {
-		case Constants.IPS:
-			if(StringUtils.isBlank(CERT_MD5) || StringUtils.isBlank(PUB_KEY) || StringUtils.isBlank(DES_KEY) || StringUtils.isBlank(DES_IV)) {
-				flash.error("请填写正确的环迅参数");
-				
-				managedFunds(gatewayId);
-			}
-			
-			keyInfo.put("CERT_MD5", CERT_MD5);
-			keyInfo.put("PUB_KEY", PUB_KEY.replace("\n", "#"));
-			keyInfo.put("DES_KEY", DES_KEY);
-			keyInfo.put("DES_IV", DES_IV);
-			
-			break;
-		case Constants.GUO:
-			if(StringUtils.isBlank(CERT_MD5) || StringUtils.isBlank(PUB_KEY) || StringUtils.isBlank(DES_KEY) || StringUtils.isBlank(DES_IV)) {
-				flash.error("请填写正确的环迅参数");
-				
-				managedFunds(gatewayId);
-			}
 
-			keyInfo.put("t1", CERT_MD5);
-			keyInfo.put("t2", PUB_KEY);
-			keyInfo.put("t3", DES_KEY);
-			
-			break;
-		case Constants.LOAN:
-			String argMerCode = params.get("argMerCode");
-			String signRate = params.get("signRate");
-			String publicKey = params.get("publicKey");
-			String privateKeyPKCS8 = params.get("privateKeyPKCS8");
-			
-			if(StringUtils.isBlank(argMerCode) || StringUtils.isBlank(signRate) || StringUtils.isBlank(publicKey) || StringUtils.isBlank(privateKeyPKCS8)) {
-				flash.error("请填写正确的双乾参数");
-				
-				managedFunds(gatewayId);
-			}
-			try{
-				Double.parseDouble(signRate.trim());	
-			}catch(Exception e){
-				
-				flash.error("请填写正确的签约费率");
-				managedFunds(gatewayId);
-			}
-		
-			keyInfo.put("argMerCode", params.get("argMerCode"));
-			keyInfo.put("signRate", params.get("signRate"));
-			keyInfo.put("publicKey", params.get("publicKey"));
-			keyInfo.put("privateKeyPKCS8", params.get("privateKeyPKCS8"));
-			break;
-		}
-		
 		gateway.name = name;
 		gateway.account = account;
 		gateway.pid = pid;
 		gateway.key = key;
 		gateway.keyInfo = keyInfo;
 		gateway.isUse = isUse;
-		
+
 		gateway.update(gatewayId, error);
-		
+
 		flash.error(error.msg);
-		
+
 		managedFunds(gatewayId);
 	}
 	
