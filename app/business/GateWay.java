@@ -1,26 +1,16 @@
 package business;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-import java.util.Set;
-
-import javax.persistence.Query;
-
-import net.sf.json.JSONObject;
-import constants.Constants;
-import constants.IPSConstants;
-//import constants.LoanConstants;
 import constants.SupervisorEvent;
-import constants.UserEvent;
+import models.t_payment_gateways;
+import net.sf.json.JSONObject;
 import play.Logger;
-import play.db.helper.JpaHelper;
 import play.db.jpa.JPA;
 import utils.ErrorInfo;
-import models.t_payment_gateways;
+
+import javax.persistence.Query;
+import java.util.*;
+import java.util.Map.Entry;
+
 
 public class GateWay {
 
@@ -91,56 +81,7 @@ public class GateWay {
 	
 	public boolean isUse;
 	
-	public static Map<Long, GateWay> queryGateWay() {
-		List<t_payment_gateways> ways = new ArrayList<t_payment_gateways>();
-		
-		try{
-			ways = t_payment_gateways.find("is_use = ?", Constants.USE).fetch();
-		}catch (Exception e) {
-			e.printStackTrace();
-			Logger.info("查询当前所有使用的支付方式时：" + e.getMessage());
-			
-//			error.code = -1;
-//			error.msg = "查询当前所有使用的支付方式失败";
-			
-			return null;
-		}
-		
-		Map<Long, GateWay> gateWays = new HashMap<Long, GateWay>();
-		GateWay gateWay = null;
-		
-		for(t_payment_gateways way : ways) {
-			gateWay = new GateWay();
-			
-			gateWay._id = way.id;
-			gateWay.name = way.name;
-			gateWay.account = way.account;
-			gateWay.pid = way.pid;
-			gateWay.key = way._key;
-			gateWay.isUse = way.is_use;
-			gateWay.information = way.information;
-			
-//			JSONObject json = JSONObject.fromObject(gateWay.information);
-//			Iterator<String> iterator = json.keys();
-//			gateWay.keyInfo = new HashMap<String, String>();
-//			
-//			while(iterator.hasNext()) {
-//				String key = iterator.next();
-//				String value = json.getString(key);
-//				
-//				if("PUB_KEY".equals(key)) {
-//					value = value.replace("#", "\n");
-//				}
-//				
-//				gateWay.keyInfo.put(key, value);
-//			}
-			
-			gateWays.put(gateWay._id,gateWay);
-		}
-		
-		return gateWays;
-	}
-	
+
 	public static List<t_payment_gateways> queryAll(ErrorInfo error) {
 		error.clear();
 		List<t_payment_gateways> ways = new ArrayList<t_payment_gateways>();
@@ -212,27 +153,6 @@ public class GateWay {
 		if(error.code < 0) {
 			JPA.setRollbackOnly();
 			return ;
-		}
-		
-		/*如果对支付账户进行了编辑，那么需要对对应的常量重新赋值*/
-		switch((int)gateWayId) {
-		case Constants.IPS:
-			IPSConstants.CERT_MD5 = info.getString("CERT_MD5");
-			IPSConstants.PUB_KEY = info.getString("PUB_KEY").replace("#", "\n");
-			IPSConstants.DES_KEY = info.getString("DES_KEY");
-			IPSConstants.DES_IV = info.getString("DES_IV");
-			break;
-//		case Constants.LOAN:
-//			LoanConstants.argMerCode = info.getString("argMerCode");
-//			LoanConstants.signRate = info.getString("signRate");
-//			LoanConstants.publicKey = info.getString("publicKey");
-//			LoanConstants.privateKeyPKCS8 = info.getString("privateKeyPKCS8");
-//			Logger.info("===================双乾支付常量更新=================");
-//			Logger.info("argMerCode = %s", LoanConstants.argMerCode==null?"null":"ok");
-//			Logger.info("signRate = %s", LoanConstants.signRate==null?"null":"ok");
-//			Logger.info("publicKey = %s", LoanConstants.publicKey==null?"null":"ok");
-//			Logger.info("privateKeyPKCS8 = %s", LoanConstants.privateKeyPKCS8==null?"null":"ok");
-//			break;
 		}
 		
 		error.code = 0;

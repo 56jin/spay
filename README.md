@@ -62,6 +62,8 @@ jdk1.6  play-1.2.7
 
 3. test:play run --%test
 
+4. local:play run --%local
+
 ## 打包
 
 1. 本地:play war -o myapp.war
@@ -69,6 +71,8 @@ jdk1.6  play-1.2.7
 2. dev:play war -o myapp.war --%dev
 
 3. test:play war -o myapp.war --%test
+
+4. local:play war -o myapp.war --%local
 
 
 
