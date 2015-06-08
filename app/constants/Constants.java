@@ -311,5 +311,11 @@ public class Constants {
 	 * 校验云盾不属于当前管理员
 	 */
 	public static final String CLOUD_SHIELD_SUPERVISOR = "-2";
+
+	public static final String GOLD_WAY_DOMAIN = Play.configuration.getProperty("jintong.domain");
+	public static final String GOLD_WAY_PRIVATE_KEY = Play.applicationPath + Play.configuration.getProperty("jintong.privateKey");
+	public static final String GOLD_WAY_PUB_KEY = Play.applicationPath +  Play.configuration.getProperty("jintong.pubKey");
+	public static final String DEDUCT_REAL_PAY_URI = Play.configuration.getProperty("jintong.deductRealPay.uri");
+	public static final String DEDUCT_REAL_SERVICE_CODE = Play.configuration.getProperty("jintong.deductRealPay.serviceCode");
 	
 }
