@@ -10,63 +10,63 @@ import java.util.Date;
  * Created by Yuan on 2015/6/9.
  */
 @Entity
-@Table(name = "DEDUCT_REAL_PAY")
+@Table(name = "t_deduct_real_pay")
 public class DeductRealPay extends Model {
     // pub
-    @Column(name = "VERSION")
+    @Column(name = "version")
     private String version = "1.0";
-    @Column(name = "TRANS_CODE")
+    @Column(name = "trans_code")
     private String transCode = "NCPS0002";
     @Temporal(TemporalType.TIMESTAMP)
-    @Column(name = "TRANS_DATETIME")
+    @Column(name = "trans_datetime")
     private Date transDatetime;
-    @Column(name = "SERIAL_NO")
+    @Column(name = "serial_no")
     private String serialNo;
 
     // req
-    @Column(name = "MER_ID")
+    @Column(name = "mer_id")
     private String merId;
-    @Column(name = "MER_NAME")
+    @Column(name = "mer_name")
     private String merName;
-    @Column(name = "TRANS_TYPE")
+    @Column(name = "trans_type")
     private String transType;
-    @Column(name = "BIZ_TYPE")
+    @Column(name = "biz_type")
     private String bizType;
-    @Column(name = "BIZ_OBJ_TYPE")
+    @Column(name = "biz_obj_type")
     private String bizObjType;
-    @Column(name = "PAYER_ACC")
+    @Column(name = "payer_acc")
     private String payerAcc;
-    @Column(name = "PAYER_NAME")
+    @Column(name = "payer_name")
     private String payerName;
-    @Column(name = "CARD_TYPE")
+    @Column(name = "card_type")
     private String cardType;
-    @Column(name = "PAYER_BANK_CODE")
+    @Column(name = "payer_bank_code")
     private String payerBankCode;
-    @Column(name = "PAYER_BANK_NAME")
+    @Column(name = "payer_bank_name")
     private String payerBankName;
-    @Column(name = "PAYER_BANK_NO")
+    @Column(name = "payer_bank_no")
     private String payerBankNo;
-    @Column(name = "AMT")
+    @Column(name = "amt")
     private BigDecimal amt;
-    @Column(name = "CERT_TYPE")
+    @Column(name = "cert_type")
     private String certType;
-    @Column(name = "CERT_NO")
+    @Column(name = "cert_no")
     private String certNo;
-    @Column(name = "PROV_NO")
+    @Column(name = "prov_no")
     private String provNo;
-    @Column(name = "CITY_NO")
+    @Column(name = "city_no")
     private String cityNo;
-    @Column(name = "PURPOSE")
+    @Column(name = "purpose")
     private String purpose;
-    @Column(name = "POSTSCRIPT")
+    @Column(name = "postscript")
     private String postscript;
 
     // ans
-    @Column(name = "EXEC_CODE")
+    @Column(name = "exec_code")
     private String execCode;
-    @Column(name = "EXEC_MSG")
+    @Column(name = "exec_msg")
     private String execMsg;
-    @Column(name = "PAY_SERIAL_NO")
+    @Column(name = "pay_serial_no")
     private String paySerialNo;
 
 
