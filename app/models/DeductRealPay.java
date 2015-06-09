@@ -3,13 +3,14 @@ package models;
 import play.db.jpa.Model;
 
 import javax.persistence.*;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
  * Created by Yuan on 2015/6/9.
  */
-//@Entity
-//@Table(name = "DEDUCT_REAL_PAY")
+@Entity
+@Table(name = "DEDUCT_REAL_PAY")
 public class DeductRealPay extends Model {
     // pub
     @Column(name = "VERSION")
@@ -46,7 +47,7 @@ public class DeductRealPay extends Model {
     @Column(name = "PAYER_BANK_NO")
     private String payerBankNo;
     @Column(name = "AMT")
-    private String amt;
+    private BigDecimal amt;
     @Column(name = "CERT_TYPE")
     private String certType;
     @Column(name = "CERT_NO")
@@ -67,8 +68,6 @@ public class DeductRealPay extends Model {
     private String execMsg;
     @Column(name = "PAY_SERIAL_NO")
     private String paySerialNo;
-
-
 
 
     public String getVersion() {
@@ -191,11 +190,11 @@ public class DeductRealPay extends Model {
         this.payerBankNo = payerBankNo;
     }
 
-    public String getAmt() {
+    public BigDecimal getAmt() {
         return amt;
     }
 
-    public void setAmt(String amt) {
+    public void setAmt(BigDecimal amt) {
         this.amt = amt;
     }
 

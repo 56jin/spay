@@ -61,7 +61,7 @@ public class GoldWayService {
         managerParams.setSoTimeout(120000);
         httpClient.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, "GBK");
         // 接口地址
-        PostMethod postMethod = new PostMethod(Constants.GOLD_WAY_DOMAIN + Constants.DEDUCT_REAL_PAY_URI);
+        PostMethod postMethod = new PostMethod(Constants.GOLD_WAY_SERVICE_URL);
         postMethod.setRequestHeader("Connection", "close");
         // 将表单的值放入postMethod中
         postMethod.setRequestBody(req);
