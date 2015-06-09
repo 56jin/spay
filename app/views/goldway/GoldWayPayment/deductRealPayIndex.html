@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>实时代收-实例演示</title>
+</head>
+<body>
+#{form @goldway.GoldWayPayment.deductRealPay(), id:'deductPayForm'}
+<table>
+    <tr>
+        <td><label>商户代码：</label></td>
+        <td><input type="text" name="merId" value="631000000000001" readonly="readonly"/></td>
+    </tr>
+    <tr>
+        <td><label>商户名称：</label></td>
+        <td><input type="text" name="merName" value="金通测试商户" readonly="readonly"/></td>
+    </tr>
+    <tr>
+        <td><label>交易代码：</label></td>
+        <td><input type="text" name="transType" value="0402" readonly="readonly"/></td>
+    </tr>
+    <tr>
+        <td><label>交易流水号：</label></td>
+        <td><input type="text" name="serialNo" value="2015042000000001"/></td>
+    </tr>
+    <tr>
+        <td><label>业务类型：</label></td>
+        <!-- 01：基金；02：小贷；03保险；04：资管；05：其他 -->
+        <td><input type="text" name="bizType" value="01"/></td>
+    </tr>
+    <tr>
+        <td><label>客户类型：</label></td>
+        <!-- 00：对私；01：对公-->
+        <td><input type="text" name="bizObjType" value="01"/></td>
+    </tr>
+    <tr>
+        <td><label>银行账号类型：</label></td>
+        <!-- 0： 借记卡；1：存折-->
+        <td><input type="text" name="cardType" value="0"/></td>
+    </tr>
+    <tr>
+        <td><label>付款人名称：</label></td>
+        <td><input name="payerName" type="text" value="付款人">(注：银行账户实名认证姓名)</td>
+    </tr>
+    <tr>
+        <td><label>付款人账号：</label></td>
+        <td><input name="payerAcc" type="text" value="6222021103124578965"></td>
+    </tr>
+    <tr>
+        <td><label>开户行名称：</label></td>
+        <td>
+            <input name="payerBankName" type="text" value="工商银行"/>
+            <input name="payerBankNo" type="text" value="102"/>
+        </td>
+    </tr>
+    <tr>
+        <td><label>开户行编码：</label></td>
+        <td><input name="payerBankCode" type="text" value="0212134"></td>
+    </tr>
+    <tr>
+        <td><label>开户省份：</label></td>
+        <td><input name="provNo" type="text" value="310000"></td>
+    </tr>
+    <tr>
+        <td><label>开户地市：</label></td>
+        <td><input name="cityNo" type="text" value="310000"></td>
+    </tr>
+    <tr>
+        <td><label>交易金额：</label></td>
+        <td><input name="amt" type="text" value="100"></td>
+    </tr>
+    <tr>
+        <td><label>用途说明：</label></td>
+        <td><input name="purpose" type="text" value="保费"/></td>
+    </tr>
+    <tr>
+        <td><label>附言：</label></td>
+        <td><input name="postscript" type="text" value="月缴，还剩3个月"/></td>
+    </tr>
+    <tr>
+        <td><label>证件类型：</label></td>
+        <td><input name="certType" type="text" value="03"/></td>
+    </tr>
+    <tr>
+        <td><label>开户证件号：</label></td>
+        <td><input name="certNo" type="text" value="320204158745878965"></td>
+    </tr>
+    <tr>
+        <td><input type="submit" name="btn_sub" value="付款"></td>
+    </tr>
+</table>
+#{/form}
+</body>
+</html>

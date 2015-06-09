@@ -221,6 +221,10 @@ GET		/chinapnr/index 														PNR.ChinaPnrQuery.index
 GET		/chinapnr/queryTransStat 												PNR.ChinaPnrQuery.queryTransStat
 GET /chinapnr/autotest																PNR.AutoInterfaceTest.index
 
+#金通
+GET     /goldway/deductRealPay                                                  goldway.GoldWayPayment.deductRealPayIndex
+POST    /goldway/deductRealPay                                                  goldway.GoldWayPayment.deductRealPay
+
 # Catch all
 #*      /{controller}/{action}                  									{controller}.{action}
 
