@@ -224,6 +224,8 @@ GET /chinapnr/autotest																PNR.AutoInterfaceTest.index
 #金通
 GET     /goldway/deductRealPay                                                  goldway.GoldWayPayment.deductRealPayIndex
 POST    /goldway/deductRealPay                                                  goldway.GoldWayPayment.deductRealPay
+GET     /goldway/deductRealPayee                                                goldway.GoldWayPayment.deductRealPayeeIndex
+POST    /goldway/deductRealPayee                                                goldway.GoldWayPayment.deductRealPayee
 
 # Catch all
 #*      /{controller}/{action}                  									{controller}.{action}

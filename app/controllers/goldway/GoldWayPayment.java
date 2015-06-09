@@ -25,5 +25,18 @@ public class GoldWayPayment extends BaseController {
             e.printStackTrace();
         }
     }
+    public static void deductRealPayeeIndex() {
+        render();
+    }
+
+    public static void deductRealPayee() {
+        Map<String, String> parameters = params.allSimple();
+        try {
+            Map<String, String> map = goldWayService.deductRealPayee(parameters);
+            renderJSON(map);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
 }
