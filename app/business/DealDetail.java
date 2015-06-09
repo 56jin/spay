@@ -1,52 +1,25 @@
 package business;
 
-import java.io.Serializable;
-import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import javax.persistence.Query;
-import javax.swing.JApplet;
-
-import net.sf.json.JSONArray;
+import constants.Constants;
+import constants.SupervisorEvent;
+import models.t_member_details;
+import models.t_member_events;
+import models.t_supervisor_events;
+import models.v_supervisor_events;
 import net.sf.json.JSONObject;
-
 import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateUtils;
-
-import com.shove.security.Encrypt;
-
-import constants.Constants;
-import constants.DealType;
-import constants.IPSConstants;
-import constants.OptionKeys;
-import constants.SupervisorEvent;
-import constants.YEEConstants;
-import constants.YEEConstants.Status;
-import controllers.YEE.YEEPayment;
-import controllers.YEE.SecureSign.SignUtil;
 import play.Logger;
 import play.db.helper.JpaHelper;
 import play.db.jpa.JPA;
-import play.libs.WS;
-import utils.Arith;
-import utils.Converter;
 import utils.DataUtil;
 import utils.DateUtil;
 import utils.ErrorInfo;
-import utils.NumberUtil;
 import utils.PageBean;
-import utils.YEEUtil;
-import models.t_bids;
-import models.t_member_details;
-import models.t_member_events;
-import models.t_platforms;
-import models.t_supervisor_events;
-import models.v_supervisor_events;
-import models.v_supervisors;
+
+import javax.persistence.Query;
+import java.io.Serializable;
+import java.util.*;
 
 /**
  * 交易记录实体类
@@ -83,7 +56,6 @@ public class DealDetail implements Serializable{
 	
 	/**
 	 * 添加交易记录
-	 * @param error
 	 */
 	public boolean addDealDetail() {
 		t_member_details detail = new t_member_details();
@@ -111,7 +83,14 @@ public class DealDetail implements Serializable{
 	
 	/**
 	 * 添加交易记录
-	 * @param error
+	 * @param memberId
+	 * @param platformId
+	 * @param serialNumber
+	 * @param operation
+	 * @param amount
+	 * @param status
+	 * @param summary
+	 * @return
 	 */
 	public static  boolean addDealDetail(long memberId,int platformId,String serialNumber,long operation,double amount,boolean status,String summary) {
 	    t_member_details detail = queryMemberdetail(platformId,serialNumber);
@@ -143,8 +122,8 @@ public class DealDetail implements Serializable{
 	
 	/**
 	 * 查询交易记录
-	 * @param platformId2
-	 * @param serialNumber2
+	 * @param platformId
+	 * @param serialNumber
 	 * @return
 	 */
 	private static t_member_details queryMemberdetail(int platformId,String serialNumber) {
@@ -179,21 +158,24 @@ public class DealDetail implements Serializable{
 		try {
 			JpaHelper.execute("update t_member_details set status = ? where serial_number like ? and status = 0", true,serialNumber+"%").executeUpdate();
 		} catch (Exception e) {
-			Logger.info("更新交易状态为成功时："+e.getMessage());
+			Logger.info("更新交易状态为成功时：" + e.getMessage());
 			
 			return false;
 		}
 		
 		return true;
 	}
-	
+
 	/**
 	 * 添加用户事件记录
-	 * @param member_id
+	 * @param memberId
 	 * @param type
-	 * @param platform_id
+	 * @param platformId
+	 * @param serialNumber
+	 * @param frontUrl
+	 * @param backgroundUrl
+	 * @param remark
 	 * @param descrption
-	 * @param error
 	 */
 	public static void addEvent(long memberId, int type, long platformId, String serialNumber,
 			String frontUrl, String backgroundUrl, String remark, String descrption) {
@@ -250,7 +232,7 @@ public class DealDetail implements Serializable{
 		try {
 			JpaHelper.execute("update t_member_events set descrption = ? where serial_number = ?", descrption,serialNumber).executeUpdate();
 		} catch (Exception e) {
-			Logger.info("回调时更新事件描述时："+e.getMessage());
+			Logger.info("回调时更新事件描述时：" + e.getMessage());
 			
 			return false;
 		}
@@ -266,13 +248,12 @@ public class DealDetail implements Serializable{
 	public static boolean isSerialNumberExist(int platformId, String serialNumber) {
 		return t_member_details.count("platform_id = ? and serial_number = ?", platformId, serialNumber) == 0 ? false : true;
 	}
-	
+
 	/**
 	 * 添加管理员事件记录
-	 * @param userId
-	 * @param type  事件类型
-	 * @param ip    ip
-	 * @param descrption  描述
+	 * @param supervisorId
+	 * @param type
+	 * @param descrption
 	 * @param error
 	 */
 	public static void supervisorEvent(long supervisorId, int type, String descrption, ErrorInfo error) {
@@ -297,14 +278,14 @@ public class DealDetail implements Serializable{
 			error.msg = "增加管理员事件记录失败!";
 		}
 	}
-	
+
 	/**
 	 * 查询后台事件(操作日志)
 	 * @param currPage
 	 * @param pageSize
 	 * @param keywordType
 	 * @param keyword
-	 * @param startTime
+	 * @param beginTime
 	 * @param endTime
 	 * @param error
 	 * @return
@@ -645,127 +626,5 @@ public class DealDetail implements Serializable{
 		
 		return error.code;
 	} 
-	
-	/**
-	 * 定时任务查询提现订单回退记录
-	 * @param error
-	 */
-	public void checkWithdraw(ErrorInfo error){
-		error.clear();
-		
-		int platFormId = (int) Platform.queryPlatformIdByDomain(YEEConstants.PLATFORM_NO, error);
-		
-		List list = new ArrayList();
-		String sql = "select serial_number from t_member_details where operation = ? and platform_id = ? and status = 0";
-		
-		try {
-			list = t_member_details.find(sql, (long)YEEConstants.WITHDRAWAL, platFormId).fetch();
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-			Logger.info("查询投资账单信息时："+e.getMessage());
-			error.code = -3;
-			error.msg = "数据库异常，导致查询提现记录失败";
-			JPA.setRollbackOnly();
-			
-			return;
-		}
-		
-		Map<String, String> userMap = null;
-		JSONObject jsonOb = null; 
-		Map<String, Object> map = null;
-		String resultarr = null;
-		
-		for(int i = 0; i <list.size(); i++){
-			userMap = new HashMap<String, String>();
-			jsonOb = new JSONObject();
-			map = new HashMap<String, Object>();
-			
-			userMap.put("requestNo", list.get(i)+"");  //补单的请求流水号
-			userMap.put("mode", "WITHDRAW_RECORD");  //查询模式
-			jsonOb.putAll(userMap);
-			
-			String req = Converter.jsonToXml(jsonOb.toString(), "request", null, null, null);
-			
-			Platform platform = new Platform();
-			platform.domain = YEEConstants.PLATFORM_NO;
-			
-			GateWay gateWay = new GateWay();
-			gateWay.id = (long)platform.gatewayId;
-			String argMerCode = gateWay.pid;
-			
-			req = YEEUtil.addAttribute(argMerCode, req);
-			map.put("sign",SignUtil.sign(req, YEEConstants.YEE_SIGN_URL, YEEConstants.YEE_SIGN_PASS));
-			map.put("req", req);
-			map.put("service", "QUERY");
-			
-			resultarr = YEEUtil.doPostQueryCmd(YEEConstants.YEE_URL_REDICT, map);
-			
-			//判断通信是否有异常，如果有异常，回调P2P失败值
-			if(null == resultarr){
-				String p3DesXmlPara = Encrypt.encrypt3DES(Converter.jsonToXml(jsonOb.toString(), "pReq", "pRow", null, null), Constants.ENCRYPTION_KEY);
-				jsonOb.put("pMerCode", list.get(i)+"");
-				jsonOb.put("pErrMsg", "");
-				jsonOb.put("pErrCode", "");
-				jsonOb.put("p3DesXmlPara", p3DesXmlPara);
-				jsonOb.put("pSign", Encrypt.MD5( list.get(i)+""+p3DesXmlPara+Constants.ENCRYPTION_KEY));
-				
-				Logger.info("-----------------------单笔业务查询请求易宝异常-------------------------------");
-				
-				return;
-			}
-			
-			JSONObject jsonResult = (JSONObject)Converter.xmlToObj(resultarr);
-			
-			Logger.info("------------------------提现查询第三方返回结果jsonResult=:"+jsonResult+"-------------------------------");
-			JSONArray jsonArr = null;
-			Object pDetails = jsonResult.get("records");//节点数组
-			
-			if(null == pDetails){
-				updateWithdrawStatus(list.get(i).toString(), error);
-				return;
-		     }
-			
-			if (pDetails.getClass().isAssignableFrom(JSONObject.class)) {
-				JSONObject pDetail = (JSONObject)pDetails; 
-				JSONObject record = pDetail.getJSONObject("record"); 
-		
-				jsonArr = new JSONArray(); 
-				jsonArr.add(record); 
-				
-			} else {
-				jsonArr = jsonResult.getJSONArray("records");
-			} 
-			
-			JSONObject pRow = jsonArr.getJSONObject(0);
-			
-			//提现成功，改变该条记录的状态，后面就不需要再来查
-			if(pRow.getString("status").equals("SUCCESS") && pRow.getString("remitStatus").equals("REMIT_SUCCESS")){
-				updateWithdrawStatus(list.get(i).toString(), error);
-				
-				return;
-				
-				//提现失败，对调P2P
-			}else if(pRow.getString("status").equals("SUCCESS") && pRow.getString("remitStatus").equals("REMIT_FAILURE")){
-				updateWithdrawStatus(list.get(i).toString(), error);
-				
-				Map<String, String> remarkMap = DealDetail.queryDetails(list.get(i).toString(), error);  //查询备份数据库的数据
-				Map<String, String> args = new HashMap<String, String>();
-				
-				jsonOb.clear();
-				jsonOb.put("pMerBillNo", list.get(i)+"");
-				jsonOb.put("pMemo1", remarkMap.get("memberId"));
-				jsonOb.put("pMemo3", remarkMap.get("pMemo3"));
-				 
-				String p3DesXmlPara = Encrypt.encrypt3DES(Converter.jsonToXml(jsonOb.toString(), "pReq", "pRow", null, null), Constants.ENCRYPTION_KEY);
-				args.put("pMerCode", YEEConstants.PLATFORM_NO);
-				args.put("pErrMsg", null);
-				args.put("pErrCode", "MG00020F");
-				args.put("p3DesXmlPara", p3DesXmlPara);
-				args.put("pSign", Encrypt.MD5( YEEConstants.PLATFORM_NO+"MG00020F"+"null"+p3DesXmlPara+Constants.ENCRYPTION_KEY));
 
-				WS.url(YEEConstants.YEE_CALLBACK).setParameters(args).post().getString();
-			}
-		}
-	}
 }

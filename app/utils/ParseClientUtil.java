@@ -15,16 +15,17 @@ import play.mvc.Http;
  * @author <a href="mailto:jiaming.wang@sunlights.cc">wangJiaMing</a>
  */
 public class ParseClientUtil {
-    public static final String PC = "0";
-    public static final String APP = "1";
-    public static final String H5 = "2";
-    
+    public static final String APP = "0";//IOS   ANDROID
+    public static final String PC = "1";
+    public static final String H5 = "3";
+
+
     public static final String APP_AGENT_NAMES = Play.configuration.getProperty("app.agent.names");
 
     public static String parseClient(Http.Request request){
-        Http.Header userAgentHeader = request.headers.get("User-Agent");
+        Http.Header userAgentHeader = request.headers.get("user-agent");
         if (userAgentHeader == null) {
-            userAgentHeader = request.headers.get("user-agent");
+            userAgentHeader = request.headers.get("User-Agent");
         }
 
         if (userAgentHeader != null && StringUtils.isNotEmpty(userAgentHeader.value())){

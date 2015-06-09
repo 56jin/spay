@@ -18,98 +18,8 @@ GET     /error                            										Application.error
 #资金托管路由
 #POST   /payment/spay                      										Payment.spay
 *    	/payment/spay                      										Payment.spay
-GET    	/ips/ips                      											IPS.IPayment.ips
-POST    /ips/ipsCommit                      									IPS.IPayment.ipsCommit
-POST    /ips/ipsCommitAsynch                      								IPS.IPayment.ipsCommitAsynch
-GET     /payment2                                      							Payment2.payment
-GET     /guo                                      								Payment2.guo
-POST    /callback                                      							Payment2.callback
-POST    /back                                      								PaymentTest.back
 
-#易宝资金托管路由
-GET     /yee/transfer                                     						YEE.YEEPayment.transfer
-*       /yee/callBack                                     						YEE.YEEPayment.callBack
-*       /yee/notifys                                     						YEE.YEEPayment.notifys
-*       /yee/logFileList~[path]                                     			YEE.YEEPayment.logFileList
 
-#-------------------------------------双乾--------------------------------------------------------------------
-#中间件向双乾提供的回调接口地址 
-#GET    /loan                      						                        loan.LoanController.loan
-#开户
-POST    /loan/loanCreateAccountReturn                      						loan.LoanController.loanCreateAccountReturn
-#标的登记（新增）
-POST    /loan/loanAddRegisterSubjectReturn                      				loan.LoanController.loanAddRegisterSubjectReturn
-#标的登记（结束）
-POST    /loan/loanEndRegisterSubjectReturn                      			    loan.LoanController.loanEndRegisterSubjectReturn
-#登记债权人
-POST    /loan/loanRegisterCreditorReturn                      					loan.LoanController.loanRegisterCreditorReturn
-GET     /loan/investFailed                      					            loan.LoanController.investFailed
-#登记债权转让
-POST    /loan/loanCreditTransferReturn                      					loan.LoanController.loanCreditTransferReturn
-#自动投标/还款签约
-POST    /loan/loanSignReturn                      						        loan.LoanController.loanSignReturn
-#充值
-POST    /loan/loanRechargeReturn                      						    loan.LoanController.loanRechargeReturn
-#转账（投资）
-POST    /loan/loanTransferReturn                      						    loan.LoanController.loanTransferReturn
-#转账（代偿）
-POST    /loan/loanCompensateReturn                      						loan.LoanController.loanCompensateReturn
-#转账（代偿还款）
-POST    /loan/loanCompensateRepaymentReturn                      			    loan.LoanController.loanCompensateRepaymentReturn
-#二次分配审核
-POST    /loan/loanAuthorizeSecondaryReturn                      			    loan.LoanController.loanAuthorizeSecondaryReturn
-#提现
-POST    /loan/loanWithdrawReturn                      			                loan.LoanController.loanWithdrawReturn
-#还款
-POST    /loan/loanRepaymentReturn                      			                loan.LoanController.loanRepaymentReturn
-#提现银行卡号绑定
-POST    /loan/loanBondCardNoReturn                      			            loan.LoanController.loanBondCardNoReturn
-#解冻保证金
-POST    /loan/loanGuaranteeUnfreezeReturn                      			        loan.LoanController.loanGuaranteeUnfreezeReturn
-#用户转商户
-POST    /loan/loanTransferUserToMerReturn                      			        loan.LoanController.loanTransferUserToMerReturn
-#商户转用户
-POST    /loan/loanTransferMerToUserReturn                      			        loan.LoanController.loanTransferMerToUserReturn
-#解冻投资金额
-POST    /loan/loanUnfreezeInvestAmountReturn                      			    loan.LoanController.loanUnfreezeInvestAmountReturn
-
-#补单
-GET     /loan/testLoanTransferAudit                                             loan.LoanController.testLoanTransferAudit
-POST    /loan/loanTransferAuditReturn                       					loan.LoanController.loanTransferAuditReturn
-
-#中间件向双乾提供的后台通知接口地址
-#开户
-POST    /loan/loanCreateAccountNotify                      						loan.LoanController.loanCreateAccountNotify
-#标的登记（新增）
-POST    /loan/loanAddRegisterSubjectNotify                      				loan.LoanController.loanAddRegisterSubjectNotify
-#标的登记（结束）
-POST    /loan/loanEndRegisterSubjectNotify                      			    loan.LoanController.loanEndRegisterSubjectNotify
-#登记债权人
-POST    /loan/loanRegisterCreditorNotify                      					loan.LoanController.loanRegisterCreditorNotify
-#登记债权转让
-POST    /loan/loanCreditTransferNotify                      					loan.LoanController.loanCreditTransferNotify
-#自动投标/还款签约
-POST    /loan/loanSignNotify                      						        loan.LoanController.loanSignNotify
-#充值
-POST    /loan/loanRechargeNotify                      						    loan.LoanController.loanRechargeNotify
-#转账（投资）
-POST    /loan/loanTransferNotify                      						    loan.LoanController.loanTransferNotify
-#二次分配审核
-POST    /loan/loanAuthorizeSecondaryNotify                      			    loan.LoanController.loanAuthorizeSecondaryNotify
-#提现
-POST    /loan/loanWithdrawNotify                      			                loan.LoanController.loanWithdrawNotify
-#还款
-POST    /loan/loanRepaymentNotify                      			                loan.LoanController.loanRepaymentNotify
-#提现银行卡号绑定
-POST    /loan/loanBondCardNoNotify                      			            loan.LoanController.loanBondCardNoNotify
-#解冻保证金
-POST    /loan/loanGuaranteeUnfreezeNotify                      			        loan.LoanController.loanGuaranteeUnfreezeNotify
-
-#国付宝资金托管路由
-GET    /guo/guo                         										GUO.GPayment.guo
-POST   /guo/guoCommit                         									GUO.GPayment.guoCommit
-POST   /guo/guoCommitLogin                         								GUO.GPayment.guoCommitLogin
-POST   /guo/guoCommitAsynch                        								GUO.GPayment.guoCommitAsynch
 
 #上传图片
 *     	/FileUpload/uploadImage 												FileUpload.uploadImage
@@ -310,9 +220,6 @@ GET 	/prepare/hfmanager  													Prepare.hfmanager
 GET		/chinapnr/index 														PNR.ChinaPnrQuery.index
 GET		/chinapnr/queryTransStat 												PNR.ChinaPnrQuery.queryTransStat
 GET /chinapnr/autotest																PNR.AutoInterfaceTest.index
-
-
-POST /guo/creferere                         GUO.GPayment.cleanReferer
 
 # Catch all
 #*      /{controller}/{action}                  									{controller}.{action}
