@@ -63,8 +63,8 @@ public class DeductRealPay extends Model {
     // ans
     @Column(name = "EXEC_CODE")
     private String execCode;
-    @Column(name = "RES_MSG")
-    private String resMsg;
+    @Column(name = "EXEC_MSG")
+    private String execMsg;
     @Column(name = "PAY_SERIAL_NO")
     private String paySerialNo;
 
@@ -255,12 +255,12 @@ public class DeductRealPay extends Model {
         this.execCode = execCode;
     }
 
-    public String getResMsg() {
-        return resMsg;
+    public String getExecMsg() {
+        return execMsg;
     }
 
-    public void setResMsg(String resMsg) {
-        this.resMsg = resMsg;
+    public void setExecMsg(String execMsg) {
+        this.execMsg = execMsg;
     }
 
     public String getPaySerialNo() {

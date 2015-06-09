@@ -102,18 +102,18 @@ public class GoldWayService {
                 Element root = XmlHelper.getField(plainResult);
                 Element ans = XmlHelper.child(root, "Ans");
                 // 交易响应码
-                String resultCode = XmlHelper.elementAsString(ans, "ExecCode");
+                String execCode = XmlHelper.elementAsString(ans, "ExecCode");
                 // 响应描述
-                String resMsg = XmlHelper.elementAsString(ans, "ExecMsg");
+                String execMsg = XmlHelper.elementAsString(ans, "ExecMsg");
                 // 金通生成的对应流水号,商户看情况使用
                 String paySerialNo = XmlHelper.elementAsString(ans, "PaySerialNo");
 
-                result.put("resultCode", resultCode);
-                result.put("resMsg", resMsg);
+                result.put("execCode", execCode);
+                result.put("execMsg", execMsg);
                 result.put("paySerialNo", paySerialNo);
 
-                deductRealPay.setExecCode(resultCode);
-                deductRealPay.setResMsg(resMsg);
+                deductRealPay.setExecCode(execCode);
+                deductRealPay.setExecMsg(execMsg);
                 deductRealPay.setPaySerialNo(paySerialNo);
 
                 deductRealPay.save();
