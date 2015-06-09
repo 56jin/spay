@@ -56,11 +56,4 @@ public class RealPayRequest extends TradeRequest {
         return sb.toString();
     }
 
-    @Override
-    public Model getModel() {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(getMap(), DeductRealPay.class);
-    }
-
-
 }

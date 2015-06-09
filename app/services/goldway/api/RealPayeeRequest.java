@@ -58,11 +58,4 @@ public class RealPayeeRequest extends TradeRequest {
 
     }
 
-    @Override
-    public Model getModel() {
-        ObjectMapper mapper = new ObjectMapper();
-        return mapper.convertValue(getMap(), DeductRealPayee.class);
-    }
-
-
 }

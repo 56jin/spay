@@ -34,6 +34,7 @@ public class TradeResponse {
     }
 
     public Map<String, String> response() throws Exception {
+        Map<String, String> result = tradeRequest.getMap();
 
         Datagram data = DatagramFactory.create(tradeRequest);
 
@@ -58,13 +59,8 @@ public class TradeResponse {
         postMethod.setRequestBody(req);
         // 执行postMethod
         int statusCode = 0;
-        Map<String, String> result = new HashMap<String, String>();
-        result.put("statusCode", "");
-        result.put("verify", "0");
-
         try {
             statusCode = httpClient.executeMethod(postMethod);
-            result.put("statusCode", statusCode + "");
             // 通信状态异常
             if (statusCode != 200) {
                 return result;
@@ -80,9 +76,6 @@ public class TradeResponse {
 
             // 验签失败
             if (verify) {
-                Model model = tradeRequest.getModel();
-                model.create();
-
                 // 获取明文响应信息
                 String plainResult = data.getPlaintext();
 
@@ -96,14 +89,9 @@ public class TradeResponse {
                 Map<String, String> map = ans1.getMap();
                 for (String key : map.keySet()) {
                     result.put(key, map.get(key));
-                    BeanUtils.setProperty(model, key, map.get(key));
                 }
-                model.save();
 
-            } else {
-                result.put("verify", "1");
             }
-
 
         } catch (HttpException e) {
             e.printStackTrace();

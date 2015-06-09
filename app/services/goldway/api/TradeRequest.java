@@ -1,7 +1,5 @@
 package services.goldway.api;
 
-import play.db.jpa.Model;
-
 import java.util.HashMap;
 import java.util.Map;
 
@@ -20,7 +18,6 @@ public abstract class TradeRequest {
     }
 
     public abstract String getXml();
-    public abstract Model getModel();
 
     public String getName() {
         return name;

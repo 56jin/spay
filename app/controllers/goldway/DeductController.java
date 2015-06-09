@@ -1,6 +1,10 @@
 package controllers.goldway;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import controllers.BaseController;
+import models.DeductRealPay;
+import models.DeductRealPayee;
 import services.goldway.DeductService;
 
 import java.util.Map;
@@ -20,7 +24,10 @@ public class DeductController extends BaseController {
         Map<String, String> parameters = params.allSimple();
         try {
             Map<String, String> map = deductService.deductRealPay(parameters);
-            renderJSON(map);
+            ObjectMapper objectMapper = new ObjectMapper();
+            DeductRealPay deductRealPay = objectMapper.convertValue(map, DeductRealPay.class);
+            deductRealPay.save();
+            renderJSON(deductRealPay);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -33,7 +40,10 @@ public class DeductController extends BaseController {
         Map<String, String> parameters = params.allSimple();
         try {
             Map<String, String> map = deductService.deductRealPayee(parameters);
-            renderJSON(map);
+            ObjectMapper objectMapper = new ObjectMapper();
+            DeductRealPayee deductRealPayee = objectMapper.convertValue(map, DeductRealPayee.class);
+            deductRealPayee.save();
+            renderJSON(deductRealPayee);
         } catch (Exception e) {
             e.printStackTrace();
         }
