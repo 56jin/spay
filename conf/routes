@@ -222,10 +222,10 @@ GET		/chinapnr/queryTransStat 												PNR.ChinaPnrQuery.queryTransStat
 GET /chinapnr/autotest																PNR.AutoInterfaceTest.index
 
 #金通
-GET     /goldway/deductRealPay                                                  goldway.GoldWayPayment.deductRealPayIndex
-POST    /goldway/deductRealPay                                                  goldway.GoldWayPayment.deductRealPay
-GET     /goldway/deductRealPayee                                                goldway.GoldWayPayment.deductRealPayeeIndex
-POST    /goldway/deductRealPayee                                                goldway.GoldWayPayment.deductRealPayee
+GET     /goldway/deductRealPay                                                  goldway.DeductController.deductRealPayIndex
+POST    /goldway/deductRealPay                                                  goldway.DeductController.deductRealPay
+GET     /goldway/deductRealPayee                                                goldway.DeductController.deductRealPayeeIndex
+POST    /goldway/deductRealPayee                                                goldway.DeductController.deductRealPayee
 
 # Catch all
 #*      /{controller}/{action}                  									{controller}.{action}

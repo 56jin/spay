@@ -20,7 +20,7 @@ import java.util.Map;
 /**
  * Created by Yuan on 2015/6/8.
  */
-public class GoldWayService {
+public class DeductService {
     /**
      * ÊµÊ±´ú¸¶
      *
