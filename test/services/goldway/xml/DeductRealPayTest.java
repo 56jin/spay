@@ -5,8 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import models.AccountValidate;
+import org.apache.commons.lang.time.DateFormatUtils;
 
 import java.io.IOException;
+import java.util.Date;
 import java.util.Map;
 
 /**
@@ -16,7 +18,9 @@ public class DeductRealPayTest {
 
     public static void main(String[] args) {
 //        readDeductRealPayTest();
-        convertValue();
+//        convertValue();
+//        toXml();
+        readeXml();
     }
 
     //    @Test
@@ -64,6 +68,82 @@ public class DeductRealPayTest {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+
+    public static void toXml() {
+        Date date = new Date();
+        RequestXml requestXml = new RequestXml();
+        requestXml.getPub().put("Version", "1.0");
+        requestXml.getPub().put("TransCode", "NCPS1002");
+        requestXml.getPub().put("TransDate", DateFormatUtils.ISO_DATE_FORMAT.format(date));
+        requestXml.getPub().put("TransTime", DateFormatUtils.ISO_TIME_FORMAT.format(date));
+        requestXml.getPub().put("SerialNo", "20150619871");
+
+        requestXml.getReq().put("MerId", "20150619871");
+        requestXml.getReq().put("OriPaySerialNo", "20150619871");
+        requestXml.getReq().put("OriTransDate", "20150619871");
+        requestXml.getReq().put("TransType", "20150619871");
+        requestXml.getReq().put("Amt", "20150619871");
+        requestXml.getReq().put("Status", "20150619871");
+        requestXml.getReq().put("Description", "20150619871");
+        XmlMapper xmlMapper = new XmlMapper();
+        try {
+            String xml = xmlMapper.writeValueAsString(requestXml);
+            System.out.println("[xml]" + xml);
+        } catch (JsonProcessingException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static void readeXml() {
+        Date date = new Date();
+        StringBuffer reqXml = new StringBuffer();
+        reqXml.append("<?xml version=\"1.0\" encoding=\"GBK\"?>");
+        reqXml.append("<package>");
+        StringBuffer pub = new StringBuffer();
+        pub.append("<Pub>");
+        pub.append("<TransCode>NCPS1002</TransCode>");
+        pub.append("<TransDate>" + DateFormatUtils.ISO_DATE_FORMAT.format(date) + "</TransDate>");
+        pub.append("<TransTime>" + DateFormatUtils.ISO_TIME_FORMAT.format(date) + "</TransTime>");
+        pub.append("<SerialNo>20150619871</SerialNo>");
+        pub.append("</Pub>");
+        reqXml.append(pub);
+
+        reqXml.append("<Req>");
+        reqXml.append("<MerId>NCPS1002</MerId>");
+        reqXml.append("<OriPaySerialNo>20150619871</OriPaySerialNo>");
+        reqXml.append("<OriTransDate>" + DateFormatUtils.ISO_DATE_FORMAT.format(date) + "</OriTransDate>");
+        reqXml.append("<TransType>0401</TransType>");
+        reqXml.append("<Amt>10000</Amt>");
+        reqXml.append("<Status>01</Status>");
+        reqXml.append("<Description>成功</Description>");
+        reqXml.append("</Req>");
+        reqXml.append("</package>");
+
+        XmlMapper xmlMapper = new XmlMapper();
+        try {
+            RequestXml requestXml = xmlMapper.readValue(reqXml.toString(), RequestXml.class);
+            System.out.println("[pub]" + requestXml.getPub());
+            System.out.println("[req]" + requestXml.getReq());
+            requestXml.getReq().clear();
+
+            // .....
+            // .....
+
+            requestXml.getAns().put("ExecCode","00");
+            requestXml.getAns().put("ExecMsg","成功");
+
+            String result = xmlMapper.writeValueAsString(requestXml);
+
+            System.out.println(result);
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+
+
     }
 
 }

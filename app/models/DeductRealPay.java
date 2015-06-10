@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * Created by Yuan on 2015/6/9.
+ * 实时代收请求表
  */
 @Entity
 @Table(name = "t_deduct_real_pay")

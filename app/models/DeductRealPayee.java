@@ -9,6 +9,7 @@ import java.util.Date;
 
 /**
  * Created by Yuan on 2015/6/9.
+ * ÊµÊ±´ú¸¶
  */
 @Entity
 @Table(name = "t_deduct_real_payee")
