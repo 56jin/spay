@@ -6,12 +6,12 @@ import java.util.Map;
 /**
  * Created by Yuan on 2015/6/9.
  */
-public abstract class TradeRequest {
+public abstract class PayRequest {
     private String name;
     private String serviceCode;
     private Map<String, String> map = new HashMap<String, String>();
 
-    public TradeRequest(String name, String serviceCode, Map<String, String> map) {
+    public PayRequest(String name, String serviceCode, Map<String, String> map) {
         this.name = name;
         this.serviceCode = serviceCode;
         this.map = map;

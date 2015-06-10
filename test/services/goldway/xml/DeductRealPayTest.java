@@ -4,14 +4,19 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.JacksonXmlModule;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import models.AccountValidate;
+
+import java.io.IOException;
+import java.util.Map;
 
 /**
  * Created by Yuan on 2015/6/8.
  */
 public class DeductRealPayTest {
 
-    public static void main(String [] args) {
-        readDeductRealPayTest();
+    public static void main(String[] args) {
+//        readDeductRealPayTest();
+        convertValue();
     }
 
     //    @Test
@@ -31,7 +36,7 @@ public class DeductRealPayTest {
         ObjectMapper xmlMapper = new XmlMapper(module);
 
 
-        StringBuilder xml =new StringBuilder();
+        StringBuilder xml = new StringBuilder();
         xml.append("<?xml version=\"1.0\" encoding=\"GBK\"?>");
         try {
             xml.append(xmlMapper.writeValueAsString(deductRealPay));
@@ -39,6 +44,26 @@ public class DeductRealPayTest {
             e.printStackTrace();
         }
         System.out.println(xml.toString());
+    }
+
+    public static void convertValue() {
+        StringBuffer xml = new StringBuffer();
+        xml.append("<Ans>");
+        xml.append("<Return_Code>1</Return_Code>");
+        xml.append("<Return_Message>1</Return_Message>");
+        xml.append("<SerialNo>1</SerialNo>");
+        xml.append("<TradeDesc>1</TradeDesc>");
+        xml.append("</Ans>");
+
+        XmlMapper xmlMapper = new XmlMapper();
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            Map map = xmlMapper.readValue(xml.toString(), Map.class);
+            AccountValidate accountValidate = objectMapper.convertValue(map, AccountValidate.class);
+            System.out.println(accountValidate.getReturnCode());
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 
 }

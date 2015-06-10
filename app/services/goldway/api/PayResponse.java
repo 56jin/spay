@@ -2,41 +2,42 @@ package services.goldway.api;
 
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import constants.Constants;
-import org.apache.commons.beanutils.BeanUtils;
 import org.apache.commons.httpclient.HttpClient;
 import org.apache.commons.httpclient.HttpException;
 import org.apache.commons.httpclient.methods.PostMethod;
 import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.dom4j.Element;
-import play.db.jpa.Model;
+import play.Logger;
 import services.goldway.Datagram;
 import services.goldway.util.XmlHelper;
-import services.goldway.xml.*;
 
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.Date;
 import java.util.Map;
 
 /**
  * Created by Yuan on 2015/6/9.
  */
-public class TradeResponse {
+public class PayResponse {
     // 商户私钥文件地址
     public static final String PRIVATE_KEY = Constants.GOLD_WAY_PRIVATE_KEY;
     // 金通公钥文件地址
     public static final String PUB_KEY = Constants.GOLD_WAY_PUB_KEY;
+    // 服务监听
+    public static final String SERVICE_URL = Constants.GOLD_WAY_SERVICE_URL;
 
-    private TradeRequest tradeRequest;
+    private PayRequest payRequest;
 
-    public TradeResponse(TradeRequest tradeRequest) {
-        this.tradeRequest = tradeRequest;
+    public PayResponse(PayRequest payRequest) {
+        this.payRequest = payRequest;
     }
 
     public Map<String, String> response() throws Exception {
-        Map<String, String> result = tradeRequest.getMap();
+        Logger.info("[" + payRequest.getName() + "] request begin at " + new Date());
+        Map<String, String> result = payRequest.getMap();
 
-        Datagram data = DatagramFactory.create(tradeRequest);
+        Datagram data = DatagramFactory.create(payRequest);
 
         data.initKey(PRIVATE_KEY, PUB_KEY);
 
@@ -53,7 +54,7 @@ public class TradeResponse {
         managerParams.setSoTimeout(120000);
         httpClient.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, "GBK");
         // 接口地址
-        PostMethod postMethod = new PostMethod(Constants.GOLD_WAY_SERVICE_URL);
+        PostMethod postMethod = new PostMethod(SERVICE_URL);
         postMethod.setRequestHeader("Connection", "close");
         // 将表单的值放入postMethod中
         postMethod.setRequestBody(req);
@@ -85,8 +86,7 @@ public class TradeResponse {
                 String text = ans.getText();
 
                 XmlMapper xmlMapper = new XmlMapper();
-                Ans ans1 = xmlMapper.readValue(text, Ans.class);
-                Map<String, String> map = ans1.getMap();
+                Map<String, String> map = xmlMapper.readValue(text, Map.class);
                 for (String key : map.keySet()) {
                     result.put(key, map.get(key));
                 }
@@ -98,6 +98,8 @@ public class TradeResponse {
         } catch (IOException e) {
             e.printStackTrace();
         }
+
+        Logger.info("[" + payRequest.getName() + "] response end at " + new Date());
         return result;
     }
 }

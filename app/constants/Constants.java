@@ -317,5 +317,6 @@ public class Constants {
 	public static final String GOLD_WAY_PUB_KEY = Play.applicationPath +  Play.configuration.getProperty("jintong.pubKey");
 	public static final String DEDUCT_REAL_PAY_SERVICE_CODE = Play.configuration.getProperty("jintong.deductRealPay.serviceCode");
 	public static final String DEDUCT_REAL_PAYEE_SERVICE_CODE = Play.configuration.getProperty("jintong.deductRealPayee.serviceCode");
+	public static final String ACCOUNT_VALIDATE_SERVICE_CODE = Play.configuration.getProperty("jintong.accountValidate.serviceCode");
 
 }

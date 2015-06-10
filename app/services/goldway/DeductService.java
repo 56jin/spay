@@ -2,7 +2,7 @@ package services.goldway;
 
 import services.goldway.api.RealPayRequest;
 import services.goldway.api.RealPayeeRequest;
-import services.goldway.api.TradeResponse;
+import services.goldway.api.PayResponse;
 
 import java.util.Map;
 
@@ -18,8 +18,8 @@ public class DeductService {
      */
     public Map<String, String> deductRealPayee(Map<String, String> parameters) throws Exception {
         RealPayeeRequest realPayeeRequest = new RealPayeeRequest(parameters);
-        TradeResponse tradeResponse = new TradeResponse(realPayeeRequest);
-        return tradeResponse.response();
+        PayResponse payResponse = new PayResponse(realPayeeRequest);
+        return payResponse.response();
     }
 
     /**
@@ -30,8 +30,8 @@ public class DeductService {
      */
     public Map<String, String> deductRealPay(Map<String, String> parameters) throws Exception {
         RealPayRequest realPayRequest = new RealPayRequest(parameters);
-        TradeResponse tradeResponse = new TradeResponse(realPayRequest);
-        return tradeResponse.response();
+        PayResponse payResponse = new PayResponse(realPayRequest);
+        return payResponse.response();
     }
 
 }

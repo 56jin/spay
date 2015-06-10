@@ -1,5 +1,6 @@
 package models;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import play.db.jpa.Model;
 
 import javax.persistence.*;
@@ -64,10 +65,13 @@ public class DeductRealPayee extends Model {
     private String postscript;
 
     // ans
+    @JsonProperty("ExecCode")
     @Column(name = "exec_code")
     private String execCode;
+    @JsonProperty("ExecMsg")
     @Column(name = "exec_msg")
     private String execMsg;
+    @JsonProperty("PaySerialNo")
     @Column(name = "pay_serial_no")
     private String paySerialNo;
 

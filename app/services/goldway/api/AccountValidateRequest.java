@@ -7,12 +7,12 @@ import java.util.Date;
 import java.util.Map;
 
 /**
- * Created by Yuan on 2015/6/9.
+ * Created by Yuan on 2015/6/10.
  */
-public class RealPayeeRequest extends PayRequest {
+public class AccountValidateRequest extends PayRequest {
 
-    public RealPayeeRequest(Map<String, String> map) {
-        super(" µ ±¥˙∏∂", Constants.DEDUCT_REAL_PAYEE_SERVICE_CODE, map);
+    public AccountValidateRequest(Map<String, String> map) {
+        super("ÂÆûÂêçËÆ§ËØÅ", Constants.ACCOUNT_VALIDATE_SERVICE_CODE, map);
     }
 
     @Override
@@ -32,27 +32,14 @@ public class RealPayeeRequest extends PayRequest {
         sb.append("<Req>");
         sb.append("<MerId>" + map.get("merId") + "</MerId>");
         sb.append("<MerName>" + map.get("merName") + "</MerName>");
-        sb.append("<TransType>" + map.get("transType") + "</TransType>");
-//		sb.append("<BizType>"+map.get("bizType")+"</BizType>");
-        sb.append("<BizObjType>" + map.get("bizObjType") + "</BizObjType>");
-        sb.append("<PayeeAcc>" + map.get("payeeAcc") + "</PayeeAcc>");
-        sb.append("<PayeeName>" + map.get("payeeName") + "</PayeeName>");
-        sb.append("<BankAccType>" + map.get("bankAccType") + "</BankAccType>");
-        sb.append("<PayeeBankCode>" + map.get("payeeBankCode") + "</PayeeBankCode>");
-        sb.append("<PayeeBankName>" + map.get("payeeBankName") + "</PayeeBankName>");
-        sb.append("<PayeeBankNo>" + map.get("payeeBankNo") + "</PayeeBankNo>");
-        sb.append("<Amt>" + map.get("amt") + "</Amt>");
+        sb.append("<AccNo>" + map.get("accNo") + "</AccNo>");
+        sb.append("<AccName>" + map.get("accName") + "</AccName>");
         sb.append("<CertType>" + map.get("certType") + "</CertType>");
         sb.append("<CertNo>" + map.get("certNo") + "</CertNo>");
         sb.append("<Mobile>" + map.get("mobile") + "</Mobile>");
-        sb.append("<ProvNo>" + map.get("provNo") + "</ProvNo>");
-        sb.append("<CityNo>" + map.get("cityNo") + "</CityNo>");
-        sb.append("<Purpose>" + map.get("purpose") + "</Purpose>");
-        sb.append("<Postscript>" + map.get("postscript") + "</Postscript>");
+        sb.append("<BankNo>" + map.get("bankNo") + "</BankNo>");
         sb.append("</Req>");
         sb.append("</package>");
         return sb.toString();
-
     }
-
 }

@@ -7,10 +7,13 @@ import services.goldway.Datagram;
  */
 public class DatagramFactory {
 
-    public static Datagram create(TradeRequest tradeRequest) {
-        String serviceCode = tradeRequest.getServiceCode();
-        String merId = tradeRequest.getMerId();
-        String xml = tradeRequest.getXml();
+    private DatagramFactory() {
+    }
+
+    public static Datagram create(PayRequest payRequest) {
+        String serviceCode = payRequest.getServiceCode();
+        String merId = payRequest.getMerId();
+        String xml = payRequest.getXml();
         return new Datagram(serviceCode, merId, xml);
     }
 }

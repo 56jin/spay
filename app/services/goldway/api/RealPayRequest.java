@@ -1,9 +1,6 @@
 package services.goldway.api;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
 import constants.Constants;
-import models.DeductRealPay;
-import play.db.jpa.Model;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -12,7 +9,7 @@ import java.util.Map;
 /**
  * Created by Yuan on 2015/6/9.
  */
-public class RealPayRequest extends TradeRequest {
+public class RealPayRequest extends PayRequest {
 
     public RealPayRequest(Map<String, String> map) {
         super("实时代收", Constants.DEDUCT_REAL_PAY_SERVICE_CODE, map);
