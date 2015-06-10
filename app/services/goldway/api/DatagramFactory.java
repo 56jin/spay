@@ -14,6 +14,6 @@ public class DatagramFactory {
         String serviceCode = payRequest.getServiceCode();
         String merId = payRequest.getMerId();
         String xml = payRequest.getXml();
-        return new Datagram(serviceCode, merId, xml);
+        return new Datagram(merId, serviceCode, xml);
     }
 }

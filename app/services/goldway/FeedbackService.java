@@ -3,10 +3,13 @@ package services.goldway;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
+import constants.Constants;
+import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import play.Logger;
 import play.db.jpa.JPA;
 import services.goldway.api.FeedbackResultFactory;
+import services.goldway.util.RSAHelper;
 import services.goldway.xml.RequestXml;
 
 import java.io.IOException;
@@ -20,48 +23,61 @@ import java.util.Map;
 public class FeedbackService {
 
     public String callBack(String xml) {
-        RequestXml requestXml;
+        Date date = new Date();
+        RequestXml requestXml = new RequestXml();
+        Map<String, String> pub = requestXml.getPub();
+        pub.put("TransDate", DateFormatUtils.ISO_DATE_FORMAT.format(date));
+        pub.put("TransTime", DateFormatUtils.ISO_TIME_FORMAT.format(date));
+        Map<String, String> ans = requestXml.getAns();
+        ans.put("ExecCode", "01");
+        ans.put("ExecMsg", "参数格式错误");
         XmlMapper xmlMapper = new XmlMapper();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            requestXml = xmlMapper.readValue(xml, RequestXml.class);
-            Map<String, String> pub = requestXml.getPub();
-            if (pub != null) {
-                String serviceCode = pub.get("TransCode");
+            String resp = new String(xml.getBytes(), "GBK");
+            String signStr = resp.substring(35, 379);            // 签名域值
+            String cipertext = resp.substring(379);
+            RSAHelper cipher = new RSAHelper();
+            cipher.initKey(Constants.GOLD_WAY_PRIVATE_KEY, Constants.GOLD_WAY_PUB_KEY, 2048);
+            String plaintext = cipher.decrypt(cipertext);
 
-                Class<?> feedbackResult = FeedbackResultFactory.createFeedbackResult(serviceCode);
-                Map<String, String> requestMap = new HashMap<String, String>();
+            //解密
+            if (cipher.verify(plaintext, signStr)) {
+                requestXml = xmlMapper.readValue(plaintext, RequestXml.class);
+                pub = requestXml.getPub();
+                if (pub != null) {
+                    String serviceCode = pub.get("TransCode");
 
-                requestMap.putAll(pub);
-                requestMap.putAll(requestXml.getReq());
+                    Class<?> feedbackResult = FeedbackResultFactory.createFeedbackResult(serviceCode);
+                    Map<String, String> requestMap = new HashMap<String, String>();
 
-                Object o = objectMapper.convertValue(requestMap, feedbackResult);
-                try {
-                    JPA.em().persist(o);
-                    requestXml.getAns().put("ExecCode", "00");
-                    requestXml.getAns().put("ExecMsg", "成功");
-                    Logger.info("[金通回调成功] ServiceCode is " + serviceCode);
-                } catch (Exception e) {
-                    Logger.error("[金通回调,保存数据失败] ServiceCode is " + serviceCode, e);
+                    requestMap.putAll(pub);
+                    requestMap.putAll(requestXml.getReq());
+
+                    Object o = objectMapper.convertValue(requestMap, feedbackResult);
+                    try {
+                        JPA.em().persist(o);
+                        requestXml.getAns().put("ExecCode", "00");
+                        requestXml.getAns().put("ExecMsg", "成功");
+                        Logger.info("[金通回调成功] ServiceCode is " + serviceCode);
+                    } catch (Exception e) {
+                        Logger.error("[金通回调,保存数据失败] ServiceCode is " + serviceCode, e);
+                        requestXml.getAns().put("ExecCode", "01");
+                        requestXml.getAns().put("ExecMsg", "保存失败");
+                    }
+
+                } else {
                     requestXml.getAns().put("ExecCode", "01");
-                    requestXml.getAns().put("ExecMsg", "保存失败");
+                    requestXml.getAns().put("ExecMsg", "交易码不能为空");
                 }
-
             } else {
                 requestXml.getAns().put("ExecCode", "01");
-                requestXml.getAns().put("ExecMsg", "交易码不能为空");
+                requestXml.getAns().put("ExecMsg", "解密失败");
             }
+
 
         } catch (IOException e) {
             Logger.error("[金通回调失败]", e);
-            Date date = new Date();
-            requestXml = new RequestXml();
-            Map<String, String> pub = requestXml.getPub();
-            pub.put("TransDate", DateFormatUtils.ISO_DATE_FORMAT.format(date));
-            pub.put("TransTime", DateFormatUtils.ISO_TIME_FORMAT.format(date));
-            Map<String, String> ans = requestXml.getAns();
-            ans.put("ExecCode", "01");
-            ans.put("ExecMsg", "参数格式错误");
         }
 
         StringBuffer result = new StringBuffer();
