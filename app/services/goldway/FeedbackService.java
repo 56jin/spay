@@ -83,6 +83,7 @@ public class FeedbackService {
         StringBuffer result = new StringBuffer();
         result.append("<?xml version=\"1.0\" encoding=\"GBK\"?>");
         try {
+            requestXml.getReq().clear();
             result.append(xmlMapper.writeValueAsString(requestXml));
         } catch (JsonProcessingException e) {
             e.printStackTrace();
