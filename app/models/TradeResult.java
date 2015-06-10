@@ -31,7 +31,7 @@ public class TradeResult extends Model {
     private String oriPaySerialNo;          //原平台流水号
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "ori_trans_date")
-    private String oriTransDate;               //交易类型:0401-实时代付,0402-实时代收
+    private Date oriTransDate;               //交易类型:0401-实时代付,0402-实时代收
     @Column(name = "trans_type")
     private String transType;               //交易类型:0401-实时代付,0402-实时代收
     @Column(name = "amt")
@@ -143,11 +143,11 @@ public class TradeResult extends Model {
         this.execMsg = execMsg;
     }
 
-    public String getOriTransDate() {
+    public Date getOriTransDate() {
         return oriTransDate;
     }
 
-    public void setOriTransDate(String oriTransDate) {
+    public void setOriTransDate(Date oriTransDate) {
         this.oriTransDate = oriTransDate;
     }
 }
