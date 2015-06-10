@@ -17,56 +17,56 @@ import sun.misc.BASE64Decoder;
 import sun.misc.BASE64Encoder; 
    
 /**
- * DSA-Digital Signature Algorithm ÊÇSchnorrºÍElGamalÇ©ÃûËã·¨µÄ±äÖÖ£¬±»ÃÀ¹úNIST×÷ÎªDSS(DigitalSignature Standard)¡£
- * ¼òµ¥µÄËµ£¬ÕâÊÇÒ»ÖÖ¸ü¸ß¼¶µÄÑéÖ¤·½Ê½£¬ÓÃ×÷Êı×ÖÇ©Ãû¡£²»µ¥µ¥Ö»ÓĞ¹«Ô¿¡¢Ë½Ô¿£¬»¹ÓĞÊı×ÖÇ©Ãû¡£Ë½Ô¿¼ÓÃÜÉú³ÉÊı×ÖÇ©Ãû£¬¹«Ô¿ÑéÖ¤Êı¾İ¼°Ç©Ãû¡£
- * Èç¹ûÊı¾İºÍÇ©Ãû²»Æ¥ÅäÔòÈÏÎªÑéÖ¤Ê§°Ü£¡¼´ ´«ÊäÖĞµÄÊı¾İ ¿ÉÒÔ²»ÔÙ¼ÓÃÜ£¬½ÓÊÕ·½»ñµÃÊı¾İºó£¬ÄÃµ½¹«Ô¿ÓëÇ©Ãû ÑéÖ¤Êı¾İÊÇ·ñÓĞĞ§
+ * DSA-Digital Signature Algorithm æ˜¯Schnorrå’ŒElGamalç­¾åç®—æ³•çš„å˜ç§ï¼Œè¢«ç¾å›½NISTä½œä¸ºDSS(DigitalSignature Standard)ã€‚
+ * ç®€å•çš„è¯´ï¼Œè¿™æ˜¯ä¸€ç§æ›´é«˜çº§çš„éªŒè¯æ–¹å¼ï¼Œç”¨ä½œæ•°å­—ç­¾åã€‚ä¸å•å•åªæœ‰å…¬é’¥ã€ç§é’¥ï¼Œè¿˜æœ‰æ•°å­—ç­¾åã€‚ç§é’¥åŠ å¯†ç”Ÿæˆæ•°å­—ç­¾åï¼Œå…¬é’¥éªŒè¯æ•°æ®åŠç­¾åã€‚
+ * å¦‚æœæ•°æ®å’Œç­¾åä¸åŒ¹é…åˆ™è®¤ä¸ºéªŒè¯å¤±è´¥ï¼å³ ä¼ è¾“ä¸­çš„æ•°æ® å¯ä»¥ä¸å†åŠ å¯†ï¼Œæ¥æ”¶æ–¹è·å¾—æ•°æ®åï¼Œæ‹¿åˆ°å…¬é’¥ä¸ç­¾å éªŒè¯æ•°æ®æ˜¯å¦æœ‰æ•ˆ
  * 
  * @author stone
  * @date 2014-03-11 09:50:51
  */ 
 public class DSAHelper { 
-    //²»½ö¿ÉÒÔÊ¹ÓÃDSAËã·¨£¬Í¬ÑùÒ²¿ÉÒÔÊ¹ÓÃRSAËã·¨×öÊı×ÖÇ©Ãû 
+    //ä¸ä»…å¯ä»¥ä½¿ç”¨DSAç®—æ³•ï¼ŒåŒæ ·ä¹Ÿå¯ä»¥ä½¿ç”¨RSAç®—æ³•åšæ•°å­—ç­¾å 
     /*public static final String KEY_ALGORITHM = "RSA";
     public static final String SIGNATURE_ALGORITHM = "MD5withRSA";*/ 
        
     public static final String KEY_ALGORITHM = "DSA"; 
     public static final String SIGNATURE_ALGORITHM = "DSA"; 
        
-    public static final String DEFAULT_SEED = "$%^*%^()(HJG8awfjas7"; //Ä¬ÈÏÖÖ×Ó 
+    public static final String DEFAULT_SEED = "$%^*%^()(HJG8awfjas7"; //é»˜è®¤ç§å­ 
     public static final String PUBLIC_KEY = "DSAPublicKey"; 
     public static final String PRIVATE_KEY = "DSAPrivateKey"; 
        
     public static void main(String[] args) throws Exception { 
-        String str = "!@#$!#^$#&ZXVDF´ô¾ü¹¤Â·°®×ÅÄã*()_+"; 
+        String str = "!@#$!#^$#&ZXVDFå‘†å†›å·¥è·¯çˆ±ç€ä½ *()_+"; 
         byte[] data = str.getBytes(); 
            
-        Map<String, Object> keyMap = initKey();// ¹¹½¨ÃÜÔ¿ 
+        Map<String, Object> keyMap = initKey();// æ„å»ºå¯†é’¥ 
         PublicKey publicKey = (PublicKey) keyMap.get(PUBLIC_KEY); 
         PrivateKey privateKey = (PrivateKey) keyMap.get(PRIVATE_KEY); 
-        System.out.println("Ë½Ô¿format£º" + privateKey.getFormat()); 
-        System.out.println("¹«Ô¿format£º" + publicKey.getFormat()); 
+        System.out.println("ç§é’¥formatï¼š" + privateKey.getFormat()); 
+        System.out.println("å…¬é’¥formatï¼š" + publicKey.getFormat()); 
            
            
-        // ²úÉúÇ©Ãû 
+        // äº§ç”Ÿç­¾å 
         String sign = sign(data, getPrivateKey(keyMap)); 
            
-        // ÑéÖ¤Ç©Ãû  
+        // éªŒè¯ç­¾å  
         boolean verify1 = verify("aaa".getBytes(), getPublicKey(keyMap), sign); 
-        System.err.println("¾­ÑéÖ¤ Êı¾İºÍÇ©ÃûÆ¥Åä:" + verify1);    
+        System.err.println("ç»éªŒè¯ æ•°æ®å’Œç­¾ååŒ¹é…:" + verify1);    
            
         boolean verify = verify(data, getPublicKey(keyMap), sign); 
-        System.err.println("¾­ÑéÖ¤ Êı¾İºÍÇ©ÃûÆ¥Åä:" + verify);    
+        System.err.println("ç»éªŒè¯ æ•°æ®å’Œç­¾ååŒ¹é…:" + verify);    
     } 
        
     /**  
-     * Éú³ÉÃÜÔ¿  
+     * ç”Ÿæˆå¯†é’¥  
      *   
-     * @param seed ÖÖ×Ó  
-     * @return ÃÜÔ¿¶ÔÏó  
+     * @param seed ç§å­  
+     * @return å¯†é’¥å¯¹è±¡  
      * @throws Exception  
      */ 
     public static Map<String, Object> initKey(String seed) throws Exception { 
-        System.out.println("Éú³ÉÃÜÔ¿"); 
+        System.out.println("ç”Ÿæˆå¯†é’¥"); 
            
         KeyPairGenerator keygen = KeyPairGenerator.getInstance(KEY_ALGORITHM); 
         SecureRandom secureRandom = new SecureRandom();    
@@ -85,9 +85,9 @@ public class DSAHelper {
     } 
        
     /**  
-     * Éú³ÉÄ¬ÈÏÃÜÔ¿  
+     * ç”Ÿæˆé»˜è®¤å¯†é’¥  
      *   
-     * @return ÃÜÔ¿¶ÔÏó  
+     * @return å¯†é’¥å¯¹è±¡  
      * @throws Exception  
      */   
     public static Map<String, Object> initKey() throws Exception {    
@@ -95,7 +95,7 @@ public class DSAHelper {
     } 
        
     /**  
-     * È¡µÃË½Ô¿  
+     * å–å¾—ç§é’¥  
      *   
      * @param keyMap  
      * @return  
@@ -103,11 +103,11 @@ public class DSAHelper {
      */   
     public static String getPrivateKey(Map<String, Object> keyMap) throws Exception {    
         Key key = (Key) keyMap.get(PRIVATE_KEY);    
-        return encryptBASE64(key.getEncoded()); //base64¼ÓÃÜË½Ô¿ 
+        return encryptBASE64(key.getEncoded()); //base64åŠ å¯†ç§é’¥ 
     }    
      
     /**  
-     * È¡µÃ¹«Ô¿  
+     * å–å¾—å…¬é’¥  
      *   
      * @param keyMap  
      * @return  
@@ -115,25 +115,25 @@ public class DSAHelper {
      */   
     public static String getPublicKey(Map<String, Object> keyMap) throws Exception {    
         Key key = (Key) keyMap.get(PUBLIC_KEY);    
-        return encryptBASE64(key.getEncoded()); //base64¼ÓÃÜ¹«Ô¿ 
+        return encryptBASE64(key.getEncoded()); //base64åŠ å¯†å…¬é’¥ 
     }    
        
     /**
-     *  ÓÃË½Ô¿¶ÔĞÅÏ¢½øĞĞÊı×ÖÇ©Ãû
-     * @param data  ¼ÓÃÜÊı¾İ
-     * @param privateKey Ë½Ô¿-base64¼ÓÃÜµÄ
+     *  ç”¨ç§é’¥å¯¹ä¿¡æ¯è¿›è¡Œæ•°å­—ç­¾å
+     * @param data  åŠ å¯†æ•°æ®
+     * @param privateKey ç§é’¥-base64åŠ å¯†çš„
      * @return 
      * @throws Exception
      */ 
     public static String sign(byte[] data, String privateKey) throws Exception { 
-        System.out.println("ÓÃË½Ô¿¶ÔĞÅÏ¢½øĞĞÊı×ÖÇ©Ãû"); 
+        System.out.println("ç”¨ç§é’¥å¯¹ä¿¡æ¯è¿›è¡Œæ•°å­—ç­¾å"); 
            
         byte[] keyBytes = decryptBASE64(privateKey); 
         PKCS8EncodedKeySpec keySpec = new PKCS8EncodedKeySpec(keyBytes); 
         KeyFactory factory = KeyFactory.getInstance(KEY_ALGORITHM); 
-        PrivateKey priKey = factory.generatePrivate(keySpec);//Éú³É Ë½Ô¿ 
+        PrivateKey priKey = factory.generatePrivate(keySpec);//ç”Ÿæˆ ç§é’¥ 
            
-        //ÓÃË½Ô¿¶ÔĞÅÏ¢½øĞĞÊı×ÖÇ©Ãû 
+        //ç”¨ç§é’¥å¯¹ä¿¡æ¯è¿›è¡Œæ•°å­—ç­¾å 
         Signature signature = Signature.getInstance(SIGNATURE_ALGORITHM); 
         signature.initSign(priKey); 
         signature.update(data); 
@@ -141,9 +141,9 @@ public class DSAHelper {
     } 
        
     /**
-     * BASE64Encoder ¼ÓÃÜ
-     * @param data Òª¼ÓÃÜµÄÊı¾İ
-     * @return ¼ÓÃÜºóµÄ×Ö·û´®
+     * BASE64Encoder åŠ å¯†
+     * @param data è¦åŠ å¯†çš„æ•°æ®
+     * @return åŠ å¯†åçš„å­—ç¬¦ä¸²
      */ 
     private static String encryptBASE64(byte[] data) { 
         BASE64Encoder encoder = new BASE64Encoder(); 
@@ -152,9 +152,9 @@ public class DSAHelper {
     } 
        
     /**
-     * BASE64Decoder ½âÃÜ
-     * @param data Òª½âÃÜµÄ×Ö·û´®
-     * @return ½âÃÜºóµÄbyte[]
+     * BASE64Decoder è§£å¯†
+     * @param data è¦è§£å¯†çš„å­—ç¬¦ä¸²
+     * @return è§£å¯†åçš„byte[]
      * @throws Exception 
      */ 
     private static byte[] decryptBASE64(String data) throws Exception { 
@@ -164,10 +164,10 @@ public class DSAHelper {
     } 
        
     /**
-     * Ğ£ÑéÊı×ÖÇ©Ãû
-     * @param data ¼ÓÃÜÊı¾İ
+     * æ ¡éªŒæ•°å­—ç­¾å
+     * @param data åŠ å¯†æ•°æ®
      * @param publicKey
-     * @param sign Êı×ÖÇ©Ãû
+     * @param sign æ•°å­—ç­¾å
      * @return
      * @throws Exception
      */ 
@@ -181,7 +181,7 @@ public class DSAHelper {
         signature.initVerify(pubKey);  
         signature.update(data); 
            
-        return signature.verify(decryptBASE64(sign)); //ÑéÖ¤Ç©Ãû 
+        return signature.verify(decryptBASE64(sign)); //éªŒè¯ç­¾å 
     } 
        
 }

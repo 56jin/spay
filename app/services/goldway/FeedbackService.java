@@ -4,7 +4,6 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.xml.XmlMapper;
 import constants.Constants;
-import org.apache.commons.lang.StringUtils;
 import org.apache.commons.lang.time.DateFormatUtils;
 import play.Logger;
 import play.db.jpa.JPA;
@@ -12,7 +11,6 @@ import services.goldway.api.FeedbackResultFactory;
 import services.goldway.util.RSAHelper;
 import services.goldway.xml.RequestXml;
 
-import java.io.IOException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,22 +24,22 @@ public class FeedbackService {
         Date date = new Date();
         RequestXml requestXml = new RequestXml();
         Map<String, String> pub = requestXml.getPub();
-        pub.put("TransDate", DateFormatUtils.ISO_DATE_FORMAT.format(date));
-        pub.put("TransTime", DateFormatUtils.ISO_TIME_FORMAT.format(date));
+        pub.put("TransDate", DateFormatUtils.format(date, "yyyyMMdd"));
+        pub.put("TransTime", DateFormatUtils.format(date, "HHmmss"));
         Map<String, String> ans = requestXml.getAns();
         ans.put("ExecCode", "01");
-        ans.put("ExecMsg", "²ÎÊı¸ñÊ½´íÎó");
+        ans.put("ExecMsg", "å‚æ•°æ ¼å¼é”™è¯¯");
         XmlMapper xmlMapper = new XmlMapper();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             String resp = new String(xml.getBytes(), "GBK");
-            String signStr = resp.substring(35, 379);            // Ç©ÃûÓòÖµ
+            String signStr = resp.substring(35, 379);            // ç­¾ååŸŸå€¼
             String cipertext = resp.substring(379);
             RSAHelper cipher = new RSAHelper();
             cipher.initKey(Constants.GOLD_WAY_PRIVATE_KEY, Constants.GOLD_WAY_PUB_KEY, 2048);
             String plaintext = cipher.decrypt(cipertext);
 
-            //½âÃÜ
+            //è§£å¯†
             if (cipher.verify(plaintext, signStr)) {
                 requestXml = xmlMapper.readValue(plaintext, RequestXml.class);
                 pub = requestXml.getPub();
@@ -58,26 +56,26 @@ public class FeedbackService {
                     try {
                         JPA.em().persist(o);
                         requestXml.getAns().put("ExecCode", "00");
-                        requestXml.getAns().put("ExecMsg", "³É¹¦");
-                        Logger.info("[½ğÍ¨»Øµ÷³É¹¦] ServiceCode is " + serviceCode);
+                        requestXml.getAns().put("ExecMsg", "æˆåŠŸ");
+                        Logger.info("[é‡‘é€šå›è°ƒæˆåŠŸ] ServiceCode is " + serviceCode);
                     } catch (Exception e) {
-                        Logger.error("[½ğÍ¨»Øµ÷,±£´æÊı¾İÊ§°Ü] ServiceCode is " + serviceCode, e);
+                        Logger.error("[é‡‘é€šå›è°ƒ,ä¿å­˜æ•°æ®å¤±è´¥] ServiceCode is " + serviceCode, e);
                         requestXml.getAns().put("ExecCode", "01");
-                        requestXml.getAns().put("ExecMsg", "±£´æÊ§°Ü");
+                        requestXml.getAns().put("ExecMsg", "ä¿å­˜å¤±è´¥");
                     }
 
                 } else {
                     requestXml.getAns().put("ExecCode", "01");
-                    requestXml.getAns().put("ExecMsg", "½»Ò×Âë²»ÄÜÎª¿Õ");
+                    requestXml.getAns().put("ExecMsg", "äº¤æ˜“ç ä¸èƒ½ä¸ºç©º");
                 }
             } else {
                 requestXml.getAns().put("ExecCode", "01");
-                requestXml.getAns().put("ExecMsg", "½âÃÜÊ§°Ü");
+                requestXml.getAns().put("ExecMsg", "è§£å¯†å¤±è´¥");
             }
 
 
-        } catch (IOException e) {
-            Logger.error("[½ğÍ¨»Øµ÷Ê§°Ü]", e);
+        } catch (Exception e) {
+            Logger.error("[é‡‘é€šå›è°ƒå¤±è´¥]", e);
         }
 
         StringBuffer result = new StringBuffer();

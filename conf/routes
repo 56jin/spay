@@ -228,7 +228,7 @@ GET     /goldway/deductRealPayee                                                
 POST    /goldway/deductRealPayee                                                goldway.DeductController.deductRealPayee
 GET     /goldway/account/validate                                               goldway.AccountController.validateIndex
 POST    /goldway/account/validate                                               goldway.AccountController.validate
-POST    /goldway/feedback                                                       goldway.FeedbackController.callback
+*    /goldway/feedback                                                       goldway.FeedbackController.callback
 
 # Catch all
 #*      /{controller}/{action}                  									{controller}.{action}

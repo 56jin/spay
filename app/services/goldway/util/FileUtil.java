@@ -5,16 +5,16 @@ import java.io.FileInputStream;
 import java.io.InputStreamReader;
 
 /**
- * ÀàÃû£º FileUtil
- * ¹¦ÄÜ£ºÎÄ¼ş´¦ÀíÀà
- * ÅµÑÇ½ğÍ¨ °æÈ¨ËùÓĞ
+ * ç±»åï¼š FileUtil
+ * åŠŸèƒ½ï¼šæ–‡ä»¶å¤„ç†ç±»
+ * è¯ºäºšé‡‘é€š ç‰ˆæƒæ‰€æœ‰
  * @author zyc    2014-10-14
  * @version 1.0
  */
 public class FileUtil {
 	
 	/**
-	 * ¹¦ÄÜ£º¼ÓÔØÎÄ±¾ÎÄ¼ş
+	 * åŠŸèƒ½ï¼šåŠ è½½æ–‡æœ¬æ–‡ä»¶
 	 * @param fileName
 	 * @return
 	 * @throws Exception
@@ -35,7 +35,7 @@ public class FileUtil {
              }
              keyString = sb.toString();
         } catch (Exception ex) {
-        	throw new Exception("¼ÓÔØÎÄ¼şÄÚÈİ³öÏÖÎ´´¦ÀíÒì³£!!");
+        	throw new Exception("åŠ è½½æ–‡ä»¶å†…å®¹å‡ºç°æœªå¤„ç†å¼‚å¸¸!!");
         }finally {
         	if (fileInputStream != null) {
         		fileInputStream.close();
@@ -51,7 +51,7 @@ public class FileUtil {
     }
 	
 	/**
-	 * ¹¦ÄÜ£º¼ÓÔØÃÜÔ¿ÎÄ¼ş
+	 * åŠŸèƒ½ï¼šåŠ è½½å¯†é’¥æ–‡ä»¶
 	 * @param fileName
 	 * @return
 	 * @throws Exception

@@ -5,34 +5,34 @@ import services.goldway.util.RSAHelper;
 import services.goldway.util.StringUtil;
 
 /**
- * ÀàÃû£º Datagram
- * ¹¦ÄÜ£º×é×°±¨ÎÄ¡¢±¨ÎÄ¼Ó½âÃÜ¡¢ÑéÇ©
- * ÅµÑÇ½ðÍ¨  °æÈ¨ËùÓÐ.
+ * ç±»åï¼š Datagram
+ * åŠŸèƒ½ï¼šç»„è£…æŠ¥æ–‡ã€æŠ¥æ–‡åŠ è§£å¯†ã€éªŒç­¾
+ * è¯ºäºšé‡‘é€š  ç‰ˆæƒæ‰€æœ‰.
  * @author zyc    2014-12-27
  * @version 1.0
  */
 public class Datagram {
 	
-	/** 15Î»·¢Æð»ú¹¹ºÅ*/
+	/** 15ä½å‘èµ·æœºæž„å·*/
 	private String merId;
 	
-	/** 8Î»½»Ò×Âë*/
+	/** 8ä½äº¤æ˜“ç */
 	private String serverCode;
 	
-	/**½»Ò×ÇëÇó±¨ÎÄÌå*/
+	/**äº¤æ˜“è¯·æ±‚æŠ¥æ–‡ä½“*/
 	private String reqXml;
 	
-	/** ¼Ó½âÃÜ¶ÔÏó*/
+	/** åŠ è§£å¯†å¯¹è±¡*/
 	private RSAHelper cipher;
 	
-	/** ±¨ÎÄÖ÷ÌåÃ÷ÎÄ*/
+	/** æŠ¥æ–‡ä¸»ä½“æ˜Žæ–‡*/
 	private String plaintext;
 	
 	/**
-	 * ¹¹ÔìÆ÷
-	 * @param merId			ÉÌ»§ºÅ
-	 * @param serverCode	·þÎñ½»Ò×Âë
-	 * @param reqXml		ÇëÇóXML±¨ÎÄ
+	 * æž„é€ å™¨
+	 * @param merId			å•†æˆ·å·
+	 * @param serverCode	æœåŠ¡äº¤æ˜“ç 
+	 * @param reqXml		è¯·æ±‚XMLæŠ¥æ–‡
 	 */
 	public Datagram(String merId, String serverCode, String reqXml) {
 		this.merId = merId;
@@ -41,10 +41,10 @@ public class Datagram {
 	}
 	
 	/**
-	 * ³õÊ¼»¯¼ÓÃÜ¶ÔÏó
-	 * @param merKeyPath	ÉÌ»§Ë½Ô¿
-	 * @param pubKeyPath	ÏµÍ³¹«Ô¿
-	 * ±¸×¢£º ÏµÍ³¹«Ô¿->¼ÓÃÜ 	ÉÌ»§Ë½Ô¿->Ç©Ãû
+	 * åˆå§‹åŒ–åŠ å¯†å¯¹è±¡
+	 * @param merKeyPath	å•†æˆ·ç§é’¥
+	 * @param pubKeyPath	ç³»ç»Ÿå…¬é’¥
+	 * å¤‡æ³¨ï¼š ç³»ç»Ÿå…¬é’¥->åŠ å¯† 	å•†æˆ·ç§é’¥->ç­¾å
 	 * @throws Exception 
 	 */
     public void initKey(String merKeyPath, String pubKeyPath) throws Exception {
@@ -55,14 +55,14 @@ public class Datagram {
     }
 	
 	/**
-	 * ¹¦ÄÜ£º±¨ÎÄ¼ÓÃÜ
+	 * åŠŸèƒ½ï¼šæŠ¥æ–‡åŠ å¯†
 	 * @return
 	 */
 	public String Encrypt() {
 		/*
-		 *                                    ±¨ÎÄÍ·
+		 *                                    æŠ¥æ–‡å¤´
 		 *                  ____________________________________________
-		 * ±¨ÎÄ½á¹¹£º8Î»±¨ÎÄ×Ü³¤¶È	15Î»·¢Æð»ú¹¹ºÅ	 8Î»½»Ò×Âë	  4Î»Ç©ÃûÓò³¤¶È	  344Î»Ç©ÃûÓòÖµ	   nÎ»XML±¨ÎÄÊý¾ÝÖ÷ÌåÃÜÎÄ
+		 * æŠ¥æ–‡ç»“æž„ï¼š8ä½æŠ¥æ–‡æ€»é•¿åº¦	15ä½å‘èµ·æœºæž„å·	 8ä½äº¤æ˜“ç 	  4ä½ç­¾ååŸŸé•¿åº¦	  344ä½ç­¾ååŸŸå€¼	   nä½XMLæŠ¥æ–‡æ•°æ®ä¸»ä½“å¯†æ–‡
 		 *        |       | |        |   |    |   |       |   |        |   |            |
 		 *        0       7 8        22  23   30  31      34  35       378 379          n
 		 */
@@ -74,33 +74,33 @@ public class Datagram {
 			int gramaLen = merId.length() + serverCode.length() + signLen.length() + sign.length() + data.length();
 			String gramaLenStr = StringUtil.leftAppendZero(gramaLen + "", 8);
 			
-			// ×é×°±¨ÎÄ
+			// ç»„è£…æŠ¥æ–‡
 			return new StringBuilder("")			
-			.append(gramaLenStr)	// 8Î»±¨ÎÄ×Ü³¤¶È
-			.append(merId)			// 15Î»·¢Æð»ú¹¹ºÅ
-			.append(serverCode)	    // 8Î»½»Ò×Âë
-			.append(signLen)		// 4Î»Ç©ÃûÓò³¤¶È
-			.append(sign)			// Ç©ÃûÓòÖµ
-			.append(data)			// XML±¨ÎÄÊý¾ÝÖ÷ÌåÃÜÎÄ
+			.append(gramaLenStr)	// 8ä½æŠ¥æ–‡æ€»é•¿åº¦
+			.append(merId)			// 15ä½å‘èµ·æœºæž„å·
+			.append(serverCode)	    // 8ä½äº¤æ˜“ç 
+			.append(signLen)		// 4ä½ç­¾ååŸŸé•¿åº¦
+			.append(sign)			// ç­¾ååŸŸå€¼
+			.append(data)			// XMLæŠ¥æ–‡æ•°æ®ä¸»ä½“å¯†æ–‡
 			.toString();
 		} catch (Exception e) {
 			e.printStackTrace();
-			System.out.println("¡¾error¡¿¡¾Á÷³Ì£º½»Ò×±¨ÎÄ¼ÓÃÜÇ©Ãû¡¿³öÏÖÎ´´¦ÀíÒì³£");
+			System.out.println("ã€errorã€‘ã€æµç¨‹ï¼šäº¤æ˜“æŠ¥æ–‡åŠ å¯†ç­¾åã€‘å‡ºçŽ°æœªå¤„ç†å¼‚å¸¸");
 		}
 		return null;
 	}
 	
 	/**
-	 * ¹¦ÄÜ£º±¨ÎÄÑéÇ©
-	 * @param data	ÑéÇ©±¨ÎÄ
+	 * åŠŸèƒ½ï¼šæŠ¥æ–‡éªŒç­¾
+	 * @param data	éªŒç­¾æŠ¥æ–‡
 	 * @return
 	 * @throws Exception
 	 */
 	public boolean verifySign(String data) throws Exception {
-		// ÏµÍ³¹«Ô¿£ºÑéÇ© 	ÉÌ»§Ë½Ô¿£º½âÃÜ
-		String signStr =  data.substring(35, 379);			// Ç©ÃûÓòÖµ
-		String cipertext = data.substring(379);				// ÃÜÎÄ
-		plaintext = cipher.decrypt(cipertext);				// ½âÃÜ->Ã÷ÎÄ
+		// ç³»ç»Ÿå…¬é’¥ï¼šéªŒç­¾ 	å•†æˆ·ç§é’¥ï¼šè§£å¯†
+		String signStr =  data.substring(35, 379);			// ç­¾ååŸŸå€¼
+		String cipertext = data.substring(379);				// å¯†æ–‡
+		plaintext = cipher.decrypt(cipertext);				// è§£å¯†->æ˜Žæ–‡
 		return cipher.verify(plaintext, signStr);
 	}
 	

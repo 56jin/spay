@@ -22,15 +22,15 @@ import javax.crypto.NoSuchPaddingException;
 import org.apache.commons.codec.binary.Base64;
 
 /**
- * RSAHelper - ¶ÔRSA Ç©Ãû&ÑéÇ©/·Ö¶Î¼ÓÃÜ&·Ö¶Î½âÃÜ µÄ°ü×°
- * Ç©ÃûËã·¨: "SHA1withRSA", Ë½Ô¿½øĞĞÇ©Ãû; ¹«Ô¿½øĞĞÑéÇ©.
- * ¼ÓÃÜËã·¨: "RSA/ECB/PKCS1Padding", ¹«Ô¿½øĞĞ¼ÓÃÜ; Ë½Ô¿½øĞĞ½âÃÜ.
+ * RSAHelper - å¯¹RSA ç­¾å&éªŒç­¾/åˆ†æ®µåŠ å¯†&åˆ†æ®µè§£å¯† çš„åŒ…è£…
+ * ç­¾åç®—æ³•: "SHA1withRSA", ç§é’¥è¿›è¡Œç­¾å; å…¬é’¥è¿›è¡ŒéªŒç­¾.
+ * åŠ å¯†ç®—æ³•: "RSA/ECB/PKCS1Padding", å…¬é’¥è¿›è¡ŒåŠ å¯†; ç§é’¥è¿›è¡Œè§£å¯†.
  *
- * [localPrivKey]ÊÇ×Ô¼ºµÄË½Ô¿, ×Ô¼ºµÄ¹«Ô¿¸øÍ¨ĞÅ¶Ô·½.
- * [peerPubKey]ÊÇ¶Ô·½µÄ¹«Ô¿, ¶Ô·½µÄË½Ô¿ÔÚ¶Ô·½ÄÇ±ß.
- * ÎªÁË·½±ã, ÕâÀï¼Ù¶¨Ë«·½µÄÃÜÔ¿³¤¶ÈÒ»ÖÂ, Ç©ÃûºÍ¼ÓÃÜµÄ¹æÔòÒ²Ò»ÖÂ.
+ * [localPrivKey]æ˜¯è‡ªå·±çš„ç§é’¥, è‡ªå·±çš„å…¬é’¥ç»™é€šä¿¡å¯¹æ–¹.
+ * [peerPubKey]æ˜¯å¯¹æ–¹çš„å…¬é’¥, å¯¹æ–¹çš„ç§é’¥åœ¨å¯¹æ–¹é‚£è¾¹.
+ * ä¸ºäº†æ–¹ä¾¿, è¿™é‡Œå‡å®šåŒæ–¹çš„å¯†é’¥é•¿åº¦ä¸€è‡´, ç­¾åå’ŒåŠ å¯†çš„è§„åˆ™ä¹Ÿä¸€è‡´.
  *
- * ÒÔ`Base64Str`½áÎ²µÄ²ÎÊı±íÊ¾ÄÚÈİÊÇBase64±àÂëµÄ×Ö·û´®, ÆäËûÇé¿ö¶¼ÊÇraw×Ö·û´®.
+ * ä»¥`Base64Str`ç»“å°¾çš„å‚æ•°è¡¨ç¤ºå†…å®¹æ˜¯Base64ç¼–ç çš„å­—ç¬¦ä¸², å…¶ä»–æƒ…å†µéƒ½æ˜¯rawå­—ç¬¦ä¸².
  *
  * @author sangechen
  *
@@ -39,7 +39,7 @@ public class RSAHelper {
 
 	public static final String KEY_ALGORITHM = "RSA";
 	public static final String SIGNATURE_ALGORITHM = "SHA1withRSA";
-	public static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding"; //¼ÓÃÜblockĞèÒªÔ¤Áô11×Ö½Ú
+	public static final String CIPHER_ALGORITHM = "RSA/ECB/PKCS1Padding"; //åŠ å¯†blockéœ€è¦é¢„ç•™11å­—èŠ‚
 	public static final int KEYBIT = 2048;
 	public static final int RESERVEBYTES = 11;
 
@@ -70,13 +70,13 @@ public class RSAHelper {
 	}
 	
 	/**
-	 * ³õÊ¼»¯×Ô¼ºµÄË½Ô¿,¶Ô·½µÄ¹«Ô¿ÒÔ¼°ÃÜÔ¿³¤¶È.
-	 * `openssl genrsa -out rsa_2048.key 2048` #Ö¸¶¨Éú³ÉµÄÃÜÔ¿µÄÎ»Êı: 2048
-	 * `openssl pkcs8 -topk8 -inform PEM -in rsa_2048.key -outform PEM -nocrypt -out pkcs8.txt` #for Java ×ª»»³ÉPKCS#8±àÂë
-	 * `openssl rsa -in rsa_2048.key -pubout -out rsa_2048_pub.key` #µ¼³öpubkey
-	 * @param localPrivKeyBase64Str Base64±àÂëµÄË½Ô¿,PKCS#8±àÂë. (È¥µôpemÎÄ¼şÖĞµÄÍ·Î²±êÊ¶)
-	 * @param peerPubKeyBase64Str Base64±àÂëµÄ¹«Ô¿. (È¥µôpemÎÄ¼şÖĞµÄÍ·Î²±êÊ¶)
-	 * @param keysize ÃÜÔ¿³¤¶È, Ò»°ã2048
+	 * åˆå§‹åŒ–è‡ªå·±çš„ç§é’¥,å¯¹æ–¹çš„å…¬é’¥ä»¥åŠå¯†é’¥é•¿åº¦.
+	 * `openssl genrsa -out rsa_2048.key 2048` #æŒ‡å®šç”Ÿæˆçš„å¯†é’¥çš„ä½æ•°: 2048
+	 * `openssl pkcs8 -topk8 -inform PEM -in rsa_2048.key -outform PEM -nocrypt -out pkcs8.txt` #for Java è½¬æ¢æˆPKCS#8ç¼–ç 
+	 * `openssl rsa -in rsa_2048.key -pubout -out rsa_2048_pub.key` #å¯¼å‡ºpubkey
+	 * @param localPrivKeyBase64Str Base64ç¼–ç çš„ç§é’¥,PKCS#8ç¼–ç . (å»æ‰pemæ–‡ä»¶ä¸­çš„å¤´å°¾æ ‡è¯†)
+	 * @param peerPubKeyBase64Str Base64ç¼–ç çš„å…¬é’¥. (å»æ‰pemæ–‡ä»¶ä¸­çš„å¤´å°¾æ ‡è¯†)
+	 * @param keysize å¯†é’¥é•¿åº¦, ä¸€èˆ¬2048
 	 */
 	public void initKey(String localPrivKeyBase64Str, String peerPubKeyBase64Str, int keysize)
 	{
@@ -137,7 +137,7 @@ public class RSAHelper {
 	{
 		try {
 			cipher = Cipher.getInstance(transformation);
-			//TODO decryptBlockºÍencryptBlock¿ÉÄÜĞèÒªÖØĞÂ¼ÆËã
+			//TODO decryptBlockå’ŒencryptBlockå¯èƒ½éœ€è¦é‡æ–°è®¡ç®—
 		} catch (NoSuchAlgorithmException e) {
 			e.printStackTrace();
 		} catch (NoSuchPaddingException e) {
@@ -147,37 +147,37 @@ public class RSAHelper {
 
 	public String encrypt(String plaintext) throws UnsupportedEncodingException
 	{
-		//×ª»»µÃµ½×Ö½ÚÁ÷
+		//è½¬æ¢å¾—åˆ°å­—èŠ‚æµ
 		byte[] data = getBytesDefault(plaintext); //FIXME UTF-8
 
-		//¼ÆËã·Ö¶Î¼ÓÃÜµÄblockÊı (ÏòÉÏÈ¡Õû)
+		//è®¡ç®—åˆ†æ®µåŠ å¯†çš„blockæ•° (å‘ä¸Šå–æ•´)
 		int nBlock = (data.length / encryptBlock);
-		if ((data.length % encryptBlock) != 0) //ÓàÊı·Ç0blockÊıÔÙ¼Ó1
+		if ((data.length % encryptBlock) != 0) //ä½™æ•°é0blockæ•°å†åŠ 1
 		{
 			nBlock += 1;
 		}
 		//for debug. System.out.printf("encryptBlock: %d/%d ~ %d\n", data.length, encryptBlock, nBlock);
 
-		//Êä³öbuffer, ´óĞ¡ÎªnBlock¸ödecryptBlock
+		//è¾“å‡ºbuffer, å¤§å°ä¸ºnBlockä¸ªdecryptBlock
 		ByteArrayOutputStream outbuf = new ByteArrayOutputStream(nBlock * decryptBlock);
 
 		try {
 			cipher.init(Cipher.ENCRYPT_MODE, peerPubKey);
 			//cryptedBase64Str = Base64.encodeBase64String(cipher.doFinal(plaintext.getBytes()));
 
-			//·Ö¶Î¼ÓÃÜ
+			//åˆ†æ®µåŠ å¯†
 			for (int offset = 0; offset < data.length; offset += encryptBlock)
 			{
-				//block´óĞ¡: encryptBlock »ò Ê£Óà×Ö½ÚÊı
+				//blockå¤§å°: encryptBlock æˆ– å‰©ä½™å­—èŠ‚æ•°
 				int inputLen = (data.length - offset);
 				if (inputLen > encryptBlock)
 				{
 					inputLen = encryptBlock;
 				}
 
-				//µÃµ½·Ö¶Î¼ÓÃÜ½á¹û
+				//å¾—åˆ°åˆ†æ®µåŠ å¯†ç»“æœ
 				byte[] encryptedBlock = cipher.doFinal(data, offset, inputLen);
-				//×·¼Ó½á¹ûµ½Êä³öbufferÖĞ
+				//è¿½åŠ ç»“æœåˆ°è¾“å‡ºbufferä¸­
 				outbuf.write(encryptedBlock);
 			}
 		} catch (InvalidKeyException e) {
@@ -195,36 +195,36 @@ public class RSAHelper {
 
 	public String decrypt(String cryptedBase64Str) 
 	{
-		//×ª»»µÃµ½×Ö½ÚÁ÷
+		//è½¬æ¢å¾—åˆ°å­—èŠ‚æµ
 		byte[] data= Base64.decodeBase64(cryptedBase64Str);
 		
-		//¼ÆËã·Ö¶Î½âÃÜµÄblockÊı (ÀíÂÛÉÏÓ¦¸ÃÄÜÕû³ı)
+		//è®¡ç®—åˆ†æ®µè§£å¯†çš„blockæ•° (ç†è®ºä¸Šåº”è¯¥èƒ½æ•´é™¤)
 		int nBlock = (data.length / decryptBlock);
 		//for debug. System.out.printf("decryptBlock: %d/%d ~ %d\n", data.length, decryptBlock, nBlock);
 
-		//Êä³öbuffer, , ´óĞ¡ÎªnBlock¸öencryptBlock
+		//è¾“å‡ºbuffer, , å¤§å°ä¸ºnBlockä¸ªencryptBlock
 		ByteArrayOutputStream outbuf = new ByteArrayOutputStream(nBlock * encryptBlock);
 
 		try {
 			cipher.init(Cipher.DECRYPT_MODE, localPrivKey);
 			//plaintext = new String(cipher.doFinal(Base64.decodeBase64(cryptedBase64Str)));
 
-			//·Ö¶Î½âÃÜ
+			//åˆ†æ®µè§£å¯†
 			for (int offset = 0; offset < data.length; offset += decryptBlock)
 			{
-				//block´óĞ¡: decryptBlock »ò Ê£Óà×Ö½ÚÊı
+				//blockå¤§å°: decryptBlock æˆ– å‰©ä½™å­—èŠ‚æ•°
 				int inputLen = (data.length - offset);
 				if (inputLen > decryptBlock)
 				{
 					inputLen = decryptBlock;
 				}
 
-				//µÃµ½·Ö¶Î½âÃÜ½á¹û
+				//å¾—åˆ°åˆ†æ®µè§£å¯†ç»“æœ
 				byte[] decryptedBlock = cipher.doFinal(data, offset, inputLen);
-				//×·¼Ó½á¹ûµ½Êä³öbufferÖĞ
+				//è¿½åŠ ç»“æœåˆ°è¾“å‡ºbufferä¸­
 				outbuf.write(decryptedBlock);
 			}
-			outbuf.flush();//---Ğ´Íê³Éºó£¬ĞèÒªË¢ĞÂ»º³åÇø£¬²¢ÇÒ¹Ø±Õ»º³å
+			outbuf.flush();//---å†™å®Œæˆåï¼Œéœ€è¦åˆ·æ–°ç¼“å†²åŒºï¼Œå¹¶ä¸”å…³é—­ç¼“å†²
 			outbuf.close();
 		} catch (InvalidKeyException e) {
 			e.printStackTrace();
@@ -236,7 +236,7 @@ public class RSAHelper {
 			e.printStackTrace();
 		}
 		try {
-			return outbuf.toString("GBK");//---·µ»ØÊı¾İĞèÒª±àÂëÎªÖĞÎÄ£¬Òò´ËĞèÒª×ªÂëÎªUTF-8¸ñÊ½ created by liu.zheng
+			return outbuf.toString("GBK");//---è¿”å›æ•°æ®éœ€è¦ç¼–ç ä¸ºä¸­æ–‡ï¼Œå› æ­¤éœ€è¦è½¬ç ä¸ºUTF-8æ ¼å¼ created by liu.zheng
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		}
@@ -245,8 +245,8 @@ public class RSAHelper {
 	
 	/**
 	 * @author Aaron.Wu
-	 * @date 2014-7-1 ÉÏÎç10:04:17
-	 * @description ĞŞ¸Ä×Ö·û±àÂë£¬ÒòÎª½ÓÊÕ·½ÊÇÓ²±à³ÉGBKµÄ
+	 * @date 2014-7-1 ä¸Šåˆ10:04:17
+	 * @description ä¿®æ”¹å­—ç¬¦ç¼–ç ï¼Œå› ä¸ºæ¥æ”¶æ–¹æ˜¯ç¡¬ç¼–æˆGBKçš„
 	 */
 	private byte[] getBytesDefault(String plaintext) throws UnsupportedEncodingException{
 		return plaintext.getBytes("GBK");

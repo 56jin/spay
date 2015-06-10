@@ -20,11 +20,11 @@ import java.util.Map;
  * Created by Yuan on 2015/6/9.
  */
 public class PayResponse {
-    // ÉÌ»§Ë½Ô¿ÎÄ¼şµØÖ·
+    // å•†æˆ·ç§é’¥æ–‡ä»¶åœ°å€
     public static final String PRIVATE_KEY = Constants.GOLD_WAY_PRIVATE_KEY;
-    // ½ğÍ¨¹«Ô¿ÎÄ¼şµØÖ·
+    // é‡‘é€šå…¬é’¥æ–‡ä»¶åœ°å€
     public static final String PUB_KEY = Constants.GOLD_WAY_PUB_KEY;
-    // ·şÎñ¼àÌı
+    // æœåŠ¡ç›‘å¬
     public static final String SERVICE_URL = Constants.GOLD_WAY_SERVICE_URL;
 
     private PayRequest payRequest;
@@ -41,46 +41,46 @@ public class PayResponse {
 
         data.initKey(PRIVATE_KEY, PUB_KEY);
 
-        // Éú³É¼ÓÃÜÇëÇó
+        // ç”ŸæˆåŠ å¯†è¯·æ±‚
         String req = data.Encrypt();
 
-        // ·¢ËÍÇëÇó²¢»ñÈ¡Ó¦´ğĞÅÏ¢
+        // å‘é€è¯·æ±‚å¹¶è·å–åº”ç­”ä¿¡æ¯
         String resp = null;
         HttpClient httpClient = new HttpClient();
         HttpConnectionManagerParams managerParams = httpClient.getHttpConnectionManager().getParams();
-        // ÉèÖÃÁ¬½Ó³¬Ê±Ê±¼ä(µ¥Î»ºÁÃë)
+        // è®¾ç½®è¿æ¥è¶…æ—¶æ—¶é—´(å•ä½æ¯«ç§’)
         managerParams.setConnectionTimeout(60000);
-        // ÉèÖÃ¶ÁÊı¾İ³¬Ê±Ê±¼ä(µ¥Î»ºÁÃë)
+        // è®¾ç½®è¯»æ•°æ®è¶…æ—¶æ—¶é—´(å•ä½æ¯«ç§’)
         managerParams.setSoTimeout(120000);
         httpClient.getParams().setParameter(HttpMethodParams.HTTP_CONTENT_CHARSET, "GBK");
-        // ½Ó¿ÚµØÖ·
+        // æ¥å£åœ°å€
         PostMethod postMethod = new PostMethod(SERVICE_URL);
         postMethod.setRequestHeader("Connection", "close");
-        // ½«±íµ¥µÄÖµ·ÅÈëpostMethodÖĞ
+        // å°†è¡¨å•çš„å€¼æ”¾å…¥postMethodä¸­
         postMethod.setRequestBody(req);
-        // Ö´ĞĞpostMethod
+        // æ‰§è¡ŒpostMethod
         int statusCode = 0;
         try {
             statusCode = httpClient.executeMethod(postMethod);
-            // Í¨ĞÅ×´Ì¬Òì³£
+            // é€šä¿¡çŠ¶æ€å¼‚å¸¸
             if (statusCode != 200) {
                 return result;
             }
 
-            // ¶ÁÈ¡ÄÚÈİ
+            // è¯»å–å†…å®¹
             byte[] responseBody = postMethod.getResponseBody();
-            // ´¦ÀíÄÚÈİ
+            // å¤„ç†å†…å®¹
             resp = new String(responseBody, "GBK");
 
-            // ÑéÇ©
+            // éªŒç­¾
             boolean verify = data.verifySign(resp);
 
-            // ÑéÇ©Ê§°Ü
+            // éªŒç­¾å¤±è´¥
             if (verify) {
-                // »ñÈ¡Ã÷ÎÄÏìÓ¦ĞÅÏ¢
+                // è·å–æ˜æ–‡å“åº”ä¿¡æ¯
                 String plainResult = data.getPlaintext();
 
-                // ½âÎöxml½á¹û
+                // è§£æxmlç»“æœ
                 Element root = XmlHelper.getField(plainResult);
                 Element ans = XmlHelper.child(root, "Ans");
                 String text = ans.getText();

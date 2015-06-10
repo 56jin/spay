@@ -12,7 +12,7 @@ import java.util.Map;
 public class RealPayeeRequest extends PayRequest {
 
     public RealPayeeRequest(Map<String, String> map) {
-        super("ÊµÊ±´ú¸¶", Constants.DEDUCT_REAL_PAYEE_SERVICE_CODE, map);
+        super("å®žæ—¶ä»£ä»˜", Constants.DEDUCT_REAL_PAYEE_SERVICE_CODE, map);
     }
 
     @Override

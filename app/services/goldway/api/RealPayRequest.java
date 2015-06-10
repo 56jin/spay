@@ -12,7 +12,7 @@ import java.util.Map;
 public class RealPayRequest extends PayRequest {
 
     public RealPayRequest(Map<String, String> map) {
-        super("实时代收", Constants.DEDUCT_REAL_PAY_SERVICE_CODE, map);
+        super("瀹炴椂浠ｆ敹", Constants.DEDUCT_REAL_PAY_SERVICE_CODE, map);
     }
 
     @Override

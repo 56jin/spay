@@ -12,7 +12,6 @@ public class FeedbackController extends BaseController {
 
     public static void callback() {
         String xml = request.body.toString();
-        response.setHeader("Content-Type","text/xml;charset=GBK");
         String callBack = feedbackService.callBack(xml);
         renderXml(callBack);
     }

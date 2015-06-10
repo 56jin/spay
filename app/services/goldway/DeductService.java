@@ -11,7 +11,7 @@ import java.util.Map;
  */
 public class DeductService {
     /**
-     * 实时代付
+     * 瀹炴椂浠ｄ粯
      *
      * @param parameters
      * @return
@@ -23,7 +23,7 @@ public class DeductService {
     }
 
     /**
-     * 实时代收
+     * 瀹炴椂浠ｆ敹
      *
      * @param parameters
      * @return

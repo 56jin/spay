@@ -1,14 +1,14 @@
 package services.goldway.util;
 /**
- * ÀàÃû£º StringUtils
- * ¹¦ÄÜ£ºString¹¤¾ß
- * ÅµÑÇ½ğÍ¨ °æÈ¨ËùÓĞ
+ * ç±»åï¼š StringUtils
+ * åŠŸèƒ½ï¼šStringå·¥å…·
+ * è¯ºäºšé‡‘é€š ç‰ˆæƒæ‰€æœ‰
  * @author zyc    2014-10-15
  * @version 1.0
  */
 public class StringUtil {
 	
-	/** ×ó²¹0 */
+	/** å·¦è¡¥0 */
 	public static String leftAppendZero(String str, int strLength) {
 		if(str == null) str = "";
 		str = str.trim();
@@ -16,7 +16,7 @@ public class StringUtil {
 		if (strLen < strLength) {
 			while (strLen < strLength) {
 				StringBuffer sb = new StringBuffer();
-				sb.append("0").append(str);// ×ó²¹0
+				sb.append("0").append(str);// å·¦è¡¥0
 				str = sb.toString();
 				strLen = str.length();
 			}
