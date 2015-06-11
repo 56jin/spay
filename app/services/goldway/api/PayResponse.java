@@ -9,6 +9,7 @@ import org.apache.commons.httpclient.params.HttpConnectionManagerParams;
 import org.apache.commons.httpclient.params.HttpMethodParams;
 import org.dom4j.Element;
 import play.Logger;
+import play.Play;
 import services.goldway.Datagram;
 import services.goldway.util.XmlHelper;
 

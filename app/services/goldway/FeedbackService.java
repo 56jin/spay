@@ -8,6 +8,7 @@ import org.apache.commons.lang.time.DateFormatUtils;
 import play.Logger;
 import play.db.jpa.JPA;
 import services.goldway.api.FeedbackResultFactory;
+import services.goldway.util.FileUtil;
 import services.goldway.util.RSAHelper;
 import services.goldway.xml.RequestXml;
 
@@ -21,6 +22,16 @@ import java.util.Map;
 public class FeedbackService {
 
     public String callBack(String xml) {
+        RSAHelper cipher = new RSAHelper();
+        String merKey = null;
+        String pubKey = null;
+        try {
+            merKey = FileUtil.loadKey(Constants.GOLD_WAY_PRIVATE_KEY);
+            pubKey = FileUtil.loadKey(Constants.GOLD_WAY_PUB_KEY);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        cipher.initKey(merKey, pubKey, 2048);
         Date date = new Date();
         RequestXml requestXml = new RequestXml();
         Map<String, String> pub = requestXml.getPub();
@@ -32,11 +43,10 @@ public class FeedbackService {
         XmlMapper xmlMapper = new XmlMapper();
         ObjectMapper objectMapper = new ObjectMapper();
         try {
-            String resp = new String(xml.getBytes(), "GBK");
+            String resp = xml;
             String signStr = resp.substring(35, 379);            // 签名域值
             String cipertext = resp.substring(379);
-            RSAHelper cipher = new RSAHelper();
-            cipher.initKey(Constants.GOLD_WAY_PRIVATE_KEY, Constants.GOLD_WAY_PUB_KEY, 2048);
+
             String plaintext = cipher.decrypt(cipertext);
 
             //解密
@@ -86,6 +96,6 @@ public class FeedbackService {
         } catch (JsonProcessingException e) {
             e.printStackTrace();
         }
-        return result.toString();
+        return cipher.decrypt(result.toString());
     }
 }

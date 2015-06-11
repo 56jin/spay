@@ -22,6 +22,8 @@ public class DeductController extends BaseController {
 
     public static void deductRealPay() {
         Map<String, String> parameters = params.allSimple();
+        parameters.remove("body");
+        parameters.remove("authenticityToken");
         try {
             Map<String, String> map = deductService.deductRealPay(parameters);
             ObjectMapper objectMapper = new ObjectMapper();
@@ -38,6 +40,7 @@ public class DeductController extends BaseController {
 
     public static void deductRealPayee() {
         Map<String, String> parameters = params.allSimple();
+        parameters.remove("body");
         try {
             Map<String, String> map = deductService.deductRealPayee(parameters);
             ObjectMapper objectMapper = new ObjectMapper();
