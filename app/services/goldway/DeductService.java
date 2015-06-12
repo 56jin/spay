@@ -1,5 +1,6 @@
 package services.goldway;
 
+import services.goldway.api.RealPayFeedbackRequest;
 import services.goldway.api.RealPayRequest;
 import services.goldway.api.RealPayeeRequest;
 import services.goldway.api.PayResponse;
@@ -31,6 +32,17 @@ public class DeductService {
     public Map<String, String> deductRealPay(Map<String, String> parameters) throws Exception {
         RealPayRequest realPayRequest = new RealPayRequest(parameters);
         PayResponse payResponse = new PayResponse(realPayRequest);
+        return payResponse.response();
+    }
+
+    /**
+     * 交易结果反馈
+     * @return
+     * @throws Exception
+     */
+    public Map<String, String> deductRealPayBack() throws Exception {
+        RealPayFeedbackRequest realPayFeedbackRequest = new RealPayFeedbackRequest();
+        PayResponse payResponse = new PayResponse(realPayFeedbackRequest);
         return payResponse.response();
     }
 

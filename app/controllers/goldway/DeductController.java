@@ -52,4 +52,12 @@ public class DeductController extends BaseController {
         }
     }
 
+    public static void  deductRealPayFeedback() {
+        try {
+            deductService.deductRealPayBack();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
 }
