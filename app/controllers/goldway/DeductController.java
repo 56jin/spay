@@ -54,7 +54,8 @@ public class DeductController extends BaseController {
 
     public static void  deductRealPayFeedback() {
         try {
-            deductService.deductRealPayBack();
+            Map<String, String> stringStringMap = deductService.deductRealPayBack();
+            renderJSON(stringStringMap);
         } catch (Exception e) {
             e.printStackTrace();
         }
