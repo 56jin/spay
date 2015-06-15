@@ -2769,16 +2769,16 @@ public class ChinaPnrPayment extends BaseController {
 
         if (ChinaPnrConstants.CMD_USERREGISTER.equals(cmdId)) {//开户
             messageMap.put("code", successFlag ? MsgCode.UER_REGISTER_SUCC.getCode() : MsgCode.UER_REGISTER_FALL.getCode());
-            messageMap.put("summary", successFlag ? MsgCode.UER_REGISTER_SUCC.getMessage() : msg);
+            messageMap.put("summary", successFlag ? MsgCode.UER_REGISTER_SUCC.getMessage() : (StringUtils.isEmpty(msg) ? MsgCode.UER_REGISTER_FALL.getMessage() : msg));
         }else if (ChinaPnrConstants.CMD_NETSAVE.equals(cmdId)) {//充值
             messageMap.put("code", successFlag ? MsgCode.NET_SAVE_SUCC.getCode() : MsgCode.NET_SAVE_FALL.getCode());
-            messageMap.put("summary", successFlag ? MsgCode.NET_SAVE_SUCC.getMessage() : msg);
+            messageMap.put("summary", successFlag ? MsgCode.NET_SAVE_SUCC.getMessage() : (StringUtils.isEmpty(msg) ? MsgCode.NET_SAVE_FALL.getMessage() : msg));
         }else if (ChinaPnrConstants.CMD_INITIATIVETENDER.equals(cmdId)) {//投标
             messageMap.put("code", successFlag ? MsgCode.INVEST_SUCC.getCode() : MsgCode.INVEST_FALL.getCode());
-            messageMap.put("summary", successFlag ? MsgCode.INVEST_SUCC.getMessage() : msg);
+            messageMap.put("summary", successFlag ? MsgCode.INVEST_SUCC.getMessage() : (StringUtils.isEmpty(msg) ? MsgCode.INVEST_FALL.getMessage() : msg));
         }else if (ChinaPnrConstants.CMD_CASH.equals(cmdId)) {
             messageMap.put("code", successFlag ? MsgCode.CASH_SUCC.getCode() : MsgCode.CASH_FALL.getCode());
-            messageMap.put("summary", successFlag ? MsgCode.CASH_SUCC.getMessage() : msg);
+            messageMap.put("summary", successFlag ? MsgCode.CASH_SUCC.getMessage() : (StringUtils.isEmpty(msg) ? MsgCode.CASH_FALL.getMessage() : msg));
         }
 
         Map<String, Object> jsonMap= new HashMap<String, Object>();
