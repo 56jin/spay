@@ -17,6 +17,8 @@ public class AccountController extends BaseController {
     public static void validate() {
 
         Map<String, String> parameters = params.allSimple();
+        parameters.remove("body");
+        parameters.remove("authenticityToken");
         try {
             Map<String, String> map = accountService.validate(parameters);
             ObjectMapper objectMapper = new ObjectMapper();

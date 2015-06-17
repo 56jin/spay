@@ -315,6 +315,11 @@ public class Constants {
 	public static final String GOLD_WAY_SERVICE_URL = Play.configuration.getProperty("jintong.service.url");
 	public static final String GOLD_WAY_PRIVATE_KEY = Play.applicationPath + Play.configuration.getProperty("jintong.privateKey");
 	public static final String GOLD_WAY_PUB_KEY = Play.applicationPath +  Play.configuration.getProperty("jintong.pubKey");
+	public static final String GOLD_WAY_PAY_KEY = Play.configuration.getProperty("jintong.partner.pay.key");
+	public static final String GOLD_WAY_PAY_NAME = Play.configuration.getProperty("jintong.partner.pay.name");
+	public static final String GOLD_WAY_VALIDATE_KEY = Play.configuration.getProperty("jintong.partner.validate.key");
+
+
 	public static final String DEDUCT_REAL_PAY_SERVICE_CODE = Play.configuration.getProperty("jintong.deductRealPay.serviceCode");
 	public static final String DEDUCT_REAL_PAYEE_SERVICE_CODE = Play.configuration.getProperty("jintong.deductRealPayee.serviceCode");
 	public static final String ACCOUNT_VALIDATE_SERVICE_CODE = Play.configuration.getProperty("jintong.accountValidate.serviceCode");

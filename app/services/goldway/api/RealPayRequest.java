@@ -18,6 +18,9 @@ public class RealPayRequest extends PayRequest {
     @Override
     public String getXml() {
         Map<String, String> map = getMap();
+        map.put("merId", Constants.GOLD_WAY_PAY_KEY);
+        map.put("merName", Constants.GOLD_WAY_PAY_NAME);
+
         Date transTime = new Date();
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"GBK\"?>");

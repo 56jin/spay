@@ -18,6 +18,7 @@ public class AccountValidateRequest extends PayRequest {
     @Override
     public String getXml() {
         Map<String, String> map = getMap();
+        map.put("merId", Constants.GOLD_WAY_VALIDATE_KEY);
         Date transTime = new Date();
         StringBuilder sb = new StringBuilder();
         sb.append("<?xml version=\"1.0\" encoding=\"GBK\"?>");

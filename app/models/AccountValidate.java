@@ -22,7 +22,6 @@ public class AccountValidate extends Model {
     @Temporal(TemporalType.TIMESTAMP)
     @Column(name = "trans_datetime")
     private Date transDatetime;             //交易时间
-    @JsonProperty("SerialNo")
     @Column(name = "serial_no")
     private String serialNo;                //商户交易流水号
 
